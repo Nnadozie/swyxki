@@ -142,3 +142,20 @@ article.prose h4::before {
 	margin-top: -0.219em;
 	display: table;
 }
+
+.backdrop {
+    position: relative;
+}
+
+.backdrop:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: url(/noise.jpg);
+    opacity: .2;
+    pointer-events: none;
+    z-index: -1;
+  }
