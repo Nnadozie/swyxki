@@ -2,48 +2,80 @@
   import { onMount, onDestroy } from 'svelte';
   import { writable } from 'svelte/store';
   import { browser } from '$app/environment';
+  import { MusicLoader } from '$lib/musicLoader';
+
 
   // Props with defaults
   export let volume = 0.5;
   export let isPlaying = true;
-
-  // Audio tracks configuration
-  const tracks = [
-    { id: 1, title: 'Ambient Music', url: '/music/ambient.mp3' },
-    { id: 2, title: 'Lo-Fi Beats', url: '/music/lofi.flac' },
-    { id: 3, title: 'Nature Sounds', url: '/music/nature.mp3' }
-  ];
+  export let defaultTrack = "";
+  export let autoplay = false;
 
   // State management
   const audioPlayer = writable(null);
-  let currentTrack = tracks[0];
+  let musicLoader = new MusicLoader();
+  let tracks = [];
+  let currentTrack = null;
   let isOpen = false;
   let audioElement;
+  let categories = ['ambient', 'lofi', 'nature'];
+  let selectedCategory = 'all';
+  let isPageVisible = true;
+
+  // Add new state variables
+  let hasUserInteracted = false;
+  let playbackAttempted = false;
+
+  // Add visibility handler
+  function handleVisibilityChange() {
+    if (browser) {
+      isPageVisible = !document.hidden;
+      if (!isPageVisible && audioElement) {
+        audioElement.pause();
+      } else if (isPageVisible && isPlaying && audioElement) {
+        audioElement.play().catch(console.error);
+      }
+    }
+  }
 
   // Initialize audio on mount
-  onMount(() => {
+  onMount(async () => {
     if (browser) {
-      audioElement = new Audio(currentTrack.url);
+      await musicLoader.scanMusicDirectory();
+      tracks = musicLoader.getAllTracks();
+      console.log('Available tracks:', tracks);
+      
+      currentTrack = defaultTrack ? 
+        tracks.find(t => t.id === defaultTrack) : 
+        musicLoader.getRandomTrack();
+
+      audioElement = new Audio(currentTrack?.url);
       audioElement.loop = true;
       audioElement.volume = volume;
       audioPlayer.set(audioElement);
 
-      if (isPlaying) {
-        const playPromise = audioElement.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.error('Playback failed:', error);
-          });
+      // Add document-wide click listener for first interaction
+      const handleFirstInteraction = () => {
+        hasUserInteracted = true;
+        if (autoplay && !playbackAttempted) {
+          playbackAttempted = true;
+          tryPlayAudio();
         }
-      }
+        document.removeEventListener('click', handleFirstInteraction);
+      };
+      document.addEventListener('click', handleFirstInteraction);
+      document.addEventListener('visibilitychange', handleVisibilityChange);
     }
   });
 
   // Cleanup on destroy
   onDestroy(() => {
-    if (audioElement) {
-      audioElement.pause();
-      audioElement = null;
+    if (browser) {
+      if (audioElement) {
+        audioElement.pause();
+        audioElement = null;
+      }
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     }
   });
 
@@ -53,12 +85,9 @@
   }
 
   // Play state handler
-  $: if (audioElement) {
+  $: if (audioElement && hasUserInteracted) {
     if (isPlaying) {
-      audioElement.play().catch(error => {
-        console.error('Playback failed:', error);
-        isPlaying = false;
-      });
+      tryPlayAudio();
     } else {
       audioElement.pause();
     }
@@ -81,6 +110,34 @@
 
   function toggleMenu() {
     isOpen = !isOpen;
+  }
+
+  // Add new handlers
+  function handleCategoryChange(category) {
+    selectedCategory = category;
+    tracks = category === 'all' ? 
+      musicLoader.getAllTracks() : 
+      musicLoader.getTracksByCategory(category);
+  }
+
+  function playRandomTrack() {
+    const randomTrack = musicLoader.getRandomTrack();
+    if (randomTrack) {
+      changeTrack(randomTrack);
+    }
+  }
+
+  // Add helper function for audio playback
+  async function tryPlayAudio() {
+    if (!audioElement) return;
+    
+    try {
+      await audioElement.play();
+      isPlaying = true;
+    } catch (error) {
+      console.error('Playback failed:', error);
+      isPlaying = false;
+    }
   }
 </script>
 
@@ -122,14 +179,37 @@
       <div class="mb-4">
         <select
           class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-          on:change={(e) => changeTrack(tracks.find(t => t.id === parseInt(e.target.value)))}
+          bind:value={selectedCategory}
+          on:change={() => handleCategoryChange(selectedCategory)}
         >
-          {#each tracks as track}
-            <option value={track.id} selected={track.id === currentTrack.id}>
-              {track.title}
+          <option value="all">All Categories</option>
+          {#each categories as category}
+            <option value={category}>
+              {category.charAt(0).toUpperCase() + category.slice(1)}
             </option>
           {/each}
         </select>
+      </div>
+
+      <div class="mb-4 max-h-48 overflow-y-auto">
+        {#each tracks as track}
+          <button
+            class="w-full rounded-md p-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700
+            {currentTrack?.id === track.id ? 'bg-yellow-100 dark:bg-yellow-900' : ''}"
+            on:click={() => changeTrack(track)}
+          >
+            {track.title}
+          </button>
+        {/each}
+      </div>
+
+      <div class="flex justify-between">
+        <button
+          class="rounded-md bg-yellow-400 px-3 py-1 text-sm text-gray-900 hover:bg-yellow-300 dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-500"
+          on:click={playRandomTrack}
+        >
+          Random Track
+        </button>
       </div>
 
       <div class="mb-4 flex items-center justify-between">

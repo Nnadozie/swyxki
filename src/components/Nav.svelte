@@ -100,7 +100,11 @@
 				/>
 			</svg>
 		</a>
-		<BackgroundMusicPlayer />
+		<BackgroundMusicPlayer 
+			defaultTrack="lofi-01. Beginnings Are Such Delicate Times.flac"
+			autoplay={true}
+			volume={0.5}
+		/>
 		<button
 			aria-label="Toggle Dark Mode"
 			class="ml-1 flex h-9 w-9 items-center justify-center rounded-lg bg-yellow-400 ring-yellow-400
