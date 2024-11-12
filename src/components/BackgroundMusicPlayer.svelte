@@ -4,12 +4,10 @@
   import { browser } from '$app/environment';
   import { MusicLoader } from '$lib/musicLoader';
 
-
   // Props with defaults
   export let volume = 0.5;
-  export let isPlaying = true;
+  export let isPlaying = false;
   export let defaultTrack = "";
-  export let autoplay = false;
 
   // State management
   const audioPlayer = writable(null);
@@ -18,32 +16,88 @@
   let currentTrack = null;
   let isOpen = false;
   let audioElement;
+  let audioContext;
+  let gainNode;
   let categories = ['ambient', 'lofi', 'nature'];
   let selectedCategory = 'all';
   let isPageVisible = true;
-
-  // Add new state variables
   let hasUserInteracted = false;
-  let playbackAttempted = false;
+  let isInitialized = false;
 
-  // Add visibility handler
-  function handleVisibilityChange() {
-    if (browser) {
-      isPageVisible = !document.hidden;
-      if (!isPageVisible && audioElement) {
-        audioElement.pause();
-      } else if (isPageVisible && isPlaying && audioElement) {
-        audioElement.play().catch(console.error);
+  // Initialize audio context and nodes
+  async function initializeAudio() {
+    try {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      gainNode = audioContext.createGain();
+      gainNode.connect(audioContext.destination);
+      
+      if (audioContext.state === 'suspended') {
+        await audioContext.resume();
+      }
+      
+      if (audioElement) {
+        const source = audioContext.createMediaElementSource(audioElement);
+        source.connect(gainNode);
+      }
+      
+      return true;
+    } catch (error) {
+      console.error('Failed to initialize audio:', error);
+      return false;
+    }
+  }
+
+  // Modified tryPlayAudio function with better error handling
+  async function tryPlayAudio() {
+    if (!audioElement || !hasUserInteracted || !isPageVisible) return;
+    
+    try {
+      if (!audioContext) {
+        const initialized = await initializeAudio();
+        if (!initialized) return;
+      }
+
+      if (audioContext.state === 'suspended') {
+        await audioContext.resume();
+      }
+
+      await audioElement.play();
+    } catch (error) {
+      console.error('Playback failed:', error);
+      isPlaying = false;
+      
+      if (error.name === 'NotAllowedError') {
+        hasUserInteracted = false; // Reset interaction flag
       }
     }
   }
 
-  // Initialize audio on mount
+  // Handle first user interaction
+  function handleFirstInteraction() {
+    if (!hasUserInteracted) {
+      hasUserInteracted = true;
+      isPlaying = true;
+      if (isPlaying) {
+        tryPlayAudio();
+      }
+    }
+  }
+
+  // Add visibility change handler
+  function handleVisibilityChange() {
+    isPageVisible = !document.hidden;
+    if (!isPageVisible) {
+      audioElement?.pause();
+    } else if (isPlaying && hasUserInteracted) {
+      tryPlayAudio();
+    }
+  }
+
+  // Initialize on mount
   onMount(async () => {
     if (browser) {
       await musicLoader.scanMusicDirectory();
       tracks = musicLoader.getAllTracks();
-      console.log('Available tracks:', tracks);
       
       currentTrack = defaultTrack ? 
         tracks.find(t => t.id === defaultTrack) : 
@@ -53,18 +107,14 @@
       audioElement.loop = true;
       audioElement.volume = volume;
       audioPlayer.set(audioElement);
+      isInitialized = true;
 
-      // Add document-wide click listener for first interaction
-      const handleFirstInteraction = () => {
-        hasUserInteracted = true;
-        if (autoplay && !playbackAttempted) {
-          playbackAttempted = true;
-          tryPlayAudio();
-        }
-        document.removeEventListener('click', handleFirstInteraction);
-      };
       document.addEventListener('click', handleFirstInteraction);
+
+      // Add visibility change listener
       document.addEventListener('visibilitychange', handleVisibilityChange);
+      // Initialize visibility state
+      isPageVisible = !document.hidden;
     }
   });
 
@@ -75,7 +125,12 @@
         audioElement.pause();
         audioElement = null;
       }
+      if (audioContext) {
+        audioContext.close();
+      }
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener('click', handleFirstInteraction);
+
     }
   });
 
@@ -85,8 +140,8 @@
   }
 
   // Play state handler
-  $: if (audioElement && hasUserInteracted) {
-    if (isPlaying) {
+  $: if (audioElement && isInitialized) {
+    if (isPlaying && hasUserInteracted && isPageVisible) {
       tryPlayAudio();
     } else {
       audioElement.pause();
@@ -126,26 +181,15 @@
       changeTrack(randomTrack);
     }
   }
-
-  // Add helper function for audio playback
-  async function tryPlayAudio() {
-    if (!audioElement) return;
-    
-    try {
-      await audioElement.play();
-      isPlaying = true;
-    } catch (error) {
-      console.error('Playback failed:', error);
-      isPlaying = false;
-    }
-  }
 </script>
 
 <div class="fixed bottom-4 left-4 z-50">
   <button
     aria-label="Toggle music player"
     class="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-400 text-gray-900 shadow-lg hover:bg-yellow-300 dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-500"
-    on:click={toggleMenu}
+    on:click={() => {
+      toggleMenu();
+    }}
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -216,7 +260,9 @@
         <button
           aria-label={isPlaying ? 'Pause' : 'Play'}
           class="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-400 text-gray-900 hover:bg-yellow-300 dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-500"
-          on:click={togglePlay}
+          on:click={() => {
+            togglePlay();
+          }}
         >
           {#if isPlaying}
             <span class="sr-only">Pause</span>

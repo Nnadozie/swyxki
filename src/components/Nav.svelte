@@ -102,7 +102,6 @@
 		</a>
 		<BackgroundMusicPlayer 
 			defaultTrack="lofi-01. Beginnings Are Such Delicate Times.flac"
-			autoplay={true}
 			volume={0.5}
 		/>
 		<button
