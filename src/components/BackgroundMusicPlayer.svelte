@@ -3,6 +3,7 @@
   import { writable } from 'svelte/store';
   import { browser } from '$app/environment';
   import { MusicLoader } from '$lib/musicLoader';
+  import { spring } from 'svelte/motion';
 
   // Props with defaults
   export let volume = 0.5;
@@ -23,6 +24,51 @@
   let isPageVisible = true;
   let hasUserInteracted = false;
   let isInitialized = false;
+
+  // Drag state
+  let isDragging = false;
+  let position = spring({ x: 16, y: window.innerHeight - 80 }); // Bottom left default
+  let dragOffset = { x: 0, y: 0 };
+  let playerElement;
+  let hasBeenDragged = false;
+
+  // Animation state
+  let showTooltip = true;
+  
+  function handleDragStart(event) {
+    isDragging = true;
+    const rect = playerElement.getBoundingClientRect();
+    dragOffset.x = event.clientX - rect.left;
+    dragOffset.y = event.clientY - rect.top;
+    playerElement.style.cursor = 'grabbing';
+  }
+
+  function handleDragMove(event) {
+    if (!isDragging) return;
+    
+    hasBeenDragged = true;
+    showTooltip = false;
+
+    // Calculate new position with boundaries
+    const newX = Math.max(0, Math.min(event.clientX - dragOffset.x, window.innerWidth - playerElement.offsetWidth));
+    const newY = Math.max(0, Math.min(event.clientY - dragOffset.y, window.innerHeight - playerElement.offsetHeight));
+
+    position.set({ x: newX, y: newY });
+  }
+
+  function handleDragEnd() {
+    isDragging = false;
+    playerElement.style.cursor = 'grab';
+  }
+
+  // Handle window resize
+  function handleResize() {
+    const { x, y } = $position;
+    position.set({
+      x: Math.min(x, window.innerWidth - playerElement.offsetWidth),
+      y: Math.min(y, window.innerHeight - playerElement.offsetHeight)
+    });
+  }
 
   // Initialize audio context and nodes
   async function initializeAudio() {
@@ -116,6 +162,24 @@
       // Initialize visibility state
       isPageVisible = !document.hidden;
     }
+
+    // Initial bounce animation
+    setTimeout(() => {
+      position.stiffness = 0.1;
+      position.damping = 0.4;
+      position.set({ x: $position.x, y: $position.y - 20 });
+      setTimeout(() => position.set({ x: $position.x, y: $position.y + 20 }), 200);
+    }, 500);
+
+    // Add event listeners
+    window.addEventListener('mousemove', handleDragMove);
+    window.addEventListener('mouseup', handleDragEnd);
+    window.addEventListener('resize', handleResize);
+
+    // Hide tooltip after 5 seconds
+    setTimeout(() => {
+      showTooltip = false;
+    }, 5000);
   });
 
   // Cleanup on destroy
@@ -132,6 +196,10 @@
       document.removeEventListener('click', handleFirstInteraction);
 
     }
+
+    window.removeEventListener('mousemove', handleDragMove);
+    window.removeEventListener('mouseup', handleDragEnd);
+    window.removeEventListener('resize', handleResize);
   });
 
   // Volume change handler
@@ -183,29 +251,47 @@
   }
 </script>
 
-<div class="fixed bottom-4 left-4 z-50">
-  <button
-    aria-label="Toggle music player"
-    class="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-400 text-gray-900 shadow-lg hover:bg-yellow-300 dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-500"
-    on:click={() => {
-      toggleMenu();
-    }}
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
+<div
+  bind:this={playerElement}
+  class="fixed z-50 transition-transform"
+  style="left: {$position.x}px; top: {$position.y}px;"
+  on:mousedown={handleDragStart}
+  role="application"
+  aria-label="Draggable music player"
+>
+  <div class="relative">
+    {#if showTooltip && !hasBeenDragged}
+      <div class="absolute -top-16 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-4 py-2 text-sm text-white dark:bg-gray-100 dark:text-gray-900">
+        Click to play • Drag to move
+        <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 border-8 border-transparent border-t-gray-900 dark:border-t-gray-100" />
+      </div>
+    {/if}
+    
+    <!-- Existing player button with added animations -->
+    <button
+      aria-label="Toggle music player"
+      class="group flex h-10 w-10 cursor-grab items-center justify-center rounded-full bg-yellow-400 text-gray-900 shadow-lg transition-all hover:scale-110 hover:bg-yellow-300 active:scale-95 dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-500 {isDragging ? 'cursor-grabbing' : ''}"
+      on:click={() => {
+        toggleMenu();
+        showTooltip = false;
+      }}
     >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-      />
-    </svg>
-  </button>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 animate-pulse group-hover:animate-none"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+        />
+      </svg>
+    </button>
+  </div>
 
   {#if isOpen}
     <div class="absolute bottom-12 left-0 w-64 rounded-lg bg-white p-4 shadow-xl dark:bg-gray-800">
@@ -296,5 +382,30 @@
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     @apply h-4 w-4 cursor-pointer rounded-full bg-yellow-400 dark:bg-yellow-600;
+  }
+
+  /* Add smooth transitions for dragging */
+  .fixed {
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: transform 0.1s ease-out;
+  }
+
+  /* Prevent text selection while dragging */
+  .fixed * {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Add hover sound effect styles */
+  @keyframes hover-sound {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  button:hover {
+    animation: hover-sound 0.3s ease-in-out;
   }
 </style> 
