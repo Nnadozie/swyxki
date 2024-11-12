@@ -2,6 +2,7 @@
 	import '../tailwind.css';
 	import Nav from '../components/Nav.svelte';
 	import { MY_TWITTER_HANDLE, MY_YOUTUBE, REPO_URL, SITE_TITLE } from '$lib/siteConfig';
+	import SandstormBackground from '../components/SandstormBackground.svelte';
 </script>
 
 <svelte:head>
@@ -13,6 +14,10 @@
 	/>
 </svelte:head>
 
+<div>
+	<SandstormBackground />
+	<!-- Your other content -->
+</div>
 <div class="flex flex-col justify-center sm:px-8">
 	<Nav />
 </div>
@@ -20,7 +25,7 @@
 	<slot />
 </main>
 
-<footer class="mx-auto mb-8 flex w-full max-w-2xl flex-col items-start justify-center">
+<footer class="mx-auto flex w-full max-w-2xl flex-col items-start justify-center">
 	<hr class="border-1 mb-8 w-full border-gray-200 dark:border-gray-800" />
 	<div class="grid w-full max-w-2xl grid-cols-1 gap-4 px-4 pb-16 sm:grid-cols-2 sm:px-8">
 		<div class="flex flex-col space-y-4">

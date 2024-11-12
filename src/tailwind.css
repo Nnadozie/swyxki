@@ -22,7 +22,8 @@ body {
 	/* --scrollbar-primary-color: #3730a3; */
 	--scrollbar-primary-color: #facc15;
 	--text-color: #ef4444;
-	overflow: scroll; /* https://maxschmitt.me/posts/react-prevent-layout-shift-body-scrollable/ */
+	overflow-y: scroll; /* Ensure vertical scrollbar is always visible *//* https://maxschmitt.me/posts/react-prevent-layout-shift-body-scrollable/ */
+
 }
 /* .dark body {
     --scrollbar-primary-color: #8db2e5;
@@ -31,7 +32,8 @@ body {
     background-color: var(--bg-color);
   } */
 body::-webkit-scrollbar {
-	width: 0.5rem;
+	width: 0.5rem; /* Vertical scrollbar width */
+	height: 0; /* No horizontal scrollbar */
 }
 body::-webkit-scrollbar-thumb {
 	background: linear-gradient(var(--scrollbar-primary-color), var(--text-color));

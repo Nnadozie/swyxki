@@ -237,7 +237,9 @@
 	</div>
 
 	{#if isOpen}
-		<div class="absolute top-20 right-0 w-64 rounded-lg bg-white p-4 shadow-xl dark:bg-gray-800">
+		<div
+			class="z-50 absolute top-20 right-0 w-64 rounded-lg bg-white p-4 shadow-xl dark:bg-gray-800"
+		>
 			<div class="mb-4 flex items-center justify-between">
 				<h3 class="text-lg font-semibold text-gray-900 dark:text-white">Music Player</h3>
 				<button
