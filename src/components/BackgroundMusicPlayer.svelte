@@ -88,15 +88,15 @@
 	}
 
 	// Add visibility change handler
-	function handleVisibilityChange() {
-		if (!browser) return;
-		isPageVisible = !document.hidden;
-		if (!isPageVisible) {
-			audioElement?.pause();
-		} else if (isPlaying && hasUserInteracted) {
-			tryPlayAudio();
-		}
-	}
+	// function handleVisibilityChange() {
+	// 	if (!browser) return;
+	// 	isPageVisible = !document.hidden;
+	// 	if (!isPageVisible) {
+	// 		audioElement?.pause();
+	// 	} else if (isPlaying && hasUserInteracted) {
+	// 		tryPlayAudio();
+	// 	}
+	// }
 
 	// Initialize on mount
 	onMount(async () => {
@@ -119,7 +119,7 @@
 			document.addEventListener('click', handleFirstInteraction);
 
 			// Add visibility change listener
-			document.addEventListener('visibilitychange', handleVisibilityChange);
+			//document.addEventListener('visibilitychange', handleVisibilityChange);
 			// Initialize visibility state
 			isPageVisible = !document.hidden;
 
@@ -148,7 +148,7 @@
 			if (audioContext) {
 				audioContext.close();
 			}
-			document.removeEventListener('visibilitychange', handleVisibilityChange);
+			//document.removeEventListener('visibilitychange', handleVisibilityChange);
 			document.removeEventListener('click', handleFirstInteraction);
 		}
 
