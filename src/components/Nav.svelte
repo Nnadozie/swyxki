@@ -2,6 +2,8 @@
 	import MobileMenu from './MobileMenu.svelte';
 	import { REPO_URL } from '$lib/siteConfig';
 	import NavLink from './NavLink.svelte';
+	import BackgroundMusicPlayer from './BackgroundMusicPlayer.svelte';
+
 	let isDark = false;
 	if (typeof localStorage !== 'undefined') {
 		if (
@@ -98,6 +100,7 @@
 				/>
 			</svg>
 		</a>
+		<BackgroundMusicPlayer />
 		<button
 			aria-label="Toggle Dark Mode"
 			class="ml-1 flex h-9 w-9 items-center justify-center rounded-lg bg-yellow-400 ring-yellow-400
