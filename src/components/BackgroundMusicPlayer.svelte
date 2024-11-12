@@ -27,14 +27,40 @@
 
   // Drag state
   let isDragging = false;
-  let position = spring({ x: 16, y: window.innerHeight - 80 }); // Bottom left default
+  let position = spring({ 
+    x: 16, 
+    y: 0 
+  });
   let dragOffset = { x: 0, y: 0 };
   let playerElement;
   let hasBeenDragged = false;
 
   // Animation state
   let showTooltip = true;
-  
+
+  // Add these new state variables near the top of the script
+  let mousePosition = { x: 0, y: 0 };
+  let buttonRestPosition = { 
+    x: 16, 
+    y: 0 
+  };
+  let isTracking = false;
+  let animationFrameId = null;
+
+   // Initialize dimensions
+   let windowWidth = 0;
+  let windowHeight = 0;
+
+  function initializeDimensions() {
+    if (browser) {
+      windowWidth = window.innerWidth;
+      windowHeight = window.innerHeight;
+      buttonRestPosition = { x: 16, y: windowHeight - 80 };
+      position.set(buttonRestPosition);
+    }
+  }
+
+
   function handleDragStart(event) {
     isDragging = true;
     const rect = playerElement.getBoundingClientRect();
@@ -43,15 +69,16 @@
     playerElement.style.cursor = 'grabbing';
   }
 
+
   function handleDragMove(event) {
-    if (!isDragging) return;
+    if (!isDragging || !browser) return;
     
     hasBeenDragged = true;
     showTooltip = false;
 
     // Calculate new position with boundaries
-    const newX = Math.max(0, Math.min(event.clientX - dragOffset.x, window.innerWidth - playerElement.offsetWidth));
-    const newY = Math.max(0, Math.min(event.clientY - dragOffset.y, window.innerHeight - playerElement.offsetHeight));
+    const newX = Math.max(0, Math.min(event.clientX - dragOffset.x, windowWidth - playerElement.offsetWidth));
+    const newY = Math.max(0, Math.min(event.clientY - dragOffset.y, windowHeight - playerElement.offsetHeight));
 
     position.set({ x: newX, y: newY });
   }
@@ -61,17 +88,23 @@
     playerElement.style.cursor = 'grab';
   }
 
-  // Handle window resize
-  function handleResize() {
+// Handle window resize
+function handleResize() {
+    if (!browser) return;
+    
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+    
     const { x, y } = $position;
     position.set({
-      x: Math.min(x, window.innerWidth - playerElement.offsetWidth),
-      y: Math.min(y, window.innerHeight - playerElement.offsetHeight)
+      x: Math.min(x, windowWidth - (playerElement?.offsetWidth || 0)),
+      y: Math.min(y, windowHeight - (playerElement?.offsetHeight || 0))
     });
   }
 
   // Initialize audio context and nodes
   async function initializeAudio() {
+    if (!browser) return false;
     try {
       audioContext = new (window.AudioContext || window.webkitAudioContext)();
       gainNode = audioContext.createGain();
@@ -131,6 +164,7 @@
 
   // Add visibility change handler
   function handleVisibilityChange() {
+    if (!browser) return;
     isPageVisible = !document.hidden;
     if (!isPageVisible) {
       audioElement?.pause();
@@ -139,8 +173,57 @@
     }
   }
 
+  // Add this new function for mouse tracking
+  function updateButtonPosition(event) {
+    if (isPlaying || isDragging) return;
+    
+    mousePosition = { x: event.clientX, y: event.clientY };
+    
+    if (!isTracking) {
+      isTracking = true;
+      animateButtonTowardsMouse();
+    }
+  }
+
+  function animateButtonTowardsMouse() {
+    if (!isTracking || isPlaying || isDragging) {
+      isTracking = false;
+      cancelAnimationFrame(animationFrameId);
+      return;
+    }
+
+    const buttonRect = playerElement?.getBoundingClientRect();
+    if (!buttonRect) return;
+
+    const buttonCenter = {
+      x: buttonRect.left + buttonRect.width / 2,
+      y: buttonRect.top + buttonRect.height / 2
+    };
+
+    // Calculate distance and direction
+    const dx = mousePosition.x - buttonCenter.x;
+    const dy = mousePosition.y - buttonCenter.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    // Only move if mouse is moving away from button
+    if (distance > 50) {
+      const maxMove = 50; // Increased maximum pixels to move for faster trailing
+      const scale = Math.min(maxMove / distance, 1);
+      
+      // Add bouncing effect by adjusting the y position
+      const bounceOffset = Math.sin(Date.now() / 100) * 5; // Bouncing effect
+      position.set({
+        x: $position.x + dx * scale * 0.2, // Increased speed
+        y: $position.y + dy * scale * 0.2 + bounceOffset // Add bounce
+      });
+    }
+
+    animationFrameId = requestAnimationFrame(() => animateButtonTowardsMouse());
+  }
+
   // Initialize on mount
   onMount(async () => {
+    if (!browser) return;
     if (browser) {
       await musicLoader.scanMusicDirectory();
       tracks = musicLoader.getAllTracks();
@@ -161,6 +244,12 @@
       document.addEventListener('visibilitychange', handleVisibilityChange);
       // Initialize visibility state
       isPageVisible = !document.hidden;
+
+      // Initialize position with actual window height
+      buttonRestPosition = { x: 16, y: window.innerHeight - 80 };
+      position.set(buttonRestPosition);
+
+      window.addEventListener('mousemove', updateButtonPosition);
     }
 
     // Initial bounce animation
@@ -175,6 +264,7 @@
     window.addEventListener('mousemove', handleDragMove);
     window.addEventListener('mouseup', handleDragEnd);
     window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', updateButtonPosition);
 
     // Hide tooltip after 5 seconds
     setTimeout(() => {
@@ -184,6 +274,7 @@
 
   // Cleanup on destroy
   onDestroy(() => {
+    if (!browser) return;
     if (browser) {
       if (audioElement) {
         audioElement.pause();
@@ -200,6 +291,8 @@
     window.removeEventListener('mousemove', handleDragMove);
     window.removeEventListener('mouseup', handleDragEnd);
     window.removeEventListener('resize', handleResize);
+    window.removeEventListener('mousemove', updateButtonPosition);
+    cancelAnimationFrame(animationFrameId);
   });
 
   // Volume change handler
@@ -256,21 +349,22 @@
   class="fixed z-50 transition-transform"
   style="left: {$position.x}px; top: {$position.y}px;"
   on:mousedown={handleDragStart}
-  role="application"
   aria-label="Draggable music player"
+  role="button"
+  tabindex="0"
 >
-  <div class="relative">
+  <div class="relative" role="presentation">
     {#if showTooltip && !hasBeenDragged}
-      <div class="absolute -top-16 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-4 py-2 text-sm text-white dark:bg-gray-100 dark:text-gray-900">
+      <div class="absolute -top-16 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-4 py-2 text-sm text-white dark:bg-gray-100 dark:text-gray-900" role="tooltip">
         Click to play • Drag to move
-        <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 border-8 border-transparent border-t-gray-900 dark:border-t-gray-100" />
+        <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 border-8 border-transparent border-t-gray-900 dark:border-t-gray-100" aria-hidden="true" />
       </div>
     {/if}
     
     <!-- Existing player button with added animations -->
     <button
       aria-label="Toggle music player"
-      class="group flex h-10 w-10 cursor-grab items-center justify-center rounded-full bg-yellow-400 text-gray-900 shadow-lg transition-all hover:scale-110 hover:bg-yellow-300 active:scale-95 dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-500 {isDragging ? 'cursor-grabbing' : ''}"
+      class="music-button group flex h-10 w-10 cursor-grab items-center justify-center rounded-full bg-yellow-400 text-gray-900 shadow-lg transition-all hover:scale-110 hover:bg-yellow-300 active:scale-95 dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-500 {isDragging ? 'cursor-grabbing' : ''} {isPlaying ? 'playing' : ''} {isTracking ? 'tracking' : ''}"
       on:click={() => {
         toggleMenu();
         showTooltip = false;
@@ -407,5 +501,27 @@
 
   button:hover {
     animation: hover-sound 0.3s ease-in-out;
+  }
+
+  @keyframes bobbing {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  .music-button {
+    transition: transform 0.3s ease-out;
+    cursor: grab;
+  }
+
+  .music-button:hover {
+    cursor: grab;
+  }
+
+  .music-button.playing {
+    animation: bobbing 2s ease-in-out infinite;
+  }
+
+  .music-button.tracking {
+    transition: transform 0.1s ease-out;
   }
 </style> 
