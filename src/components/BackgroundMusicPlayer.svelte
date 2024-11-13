@@ -3,6 +3,7 @@
 	import { writable } from 'svelte/store';
 	import { browser } from '$app/environment';
 	import { MusicLoader } from '$lib/musicLoader';
+	import MusicBanner from './MusicBanner.svelte';
 
 	// Props with defaults
 	export let volume = 0.5;
@@ -26,6 +27,7 @@
 	let isInitialized = false;
 
 	let playerElement;
+	let showBanner = true;
 
 	// Initialize audio context and nodes
 	async function initializeAudio() {
@@ -119,7 +121,7 @@
 			document.addEventListener('click', handleFirstInteraction);
 
 			// Add visibility change listener
-			//document.addEventListener('visibilitychange', handleVisibilityChange);
+			document.addEventListener('visibilitychange', handleVisibilityChange);
 			// Initialize visibility state
 			isPageVisible = !document.hidden;
 
@@ -148,7 +150,7 @@
 			if (audioContext) {
 				audioContext.close();
 			}
-			//document.removeEventListener('visibilitychange', handleVisibilityChange);
+			document.removeEventListener('visibilitychange', handleVisibilityChange);
 			document.removeEventListener('click', handleFirstInteraction);
 		}
 
@@ -205,7 +207,14 @@
 			changeTrack(randomTrack);
 		}
 	}
+
+	function handleBannerContinue() {
+		showBanner = false;
+		handleFirstInteraction();
+	}
 </script>
+
+<MusicBanner visible={showBanner && !hasUserInteracted} onContinue={handleBannerContinue} />
 
 <div bind:this={playerElement} role="button" tabindex="0">
 	<div class="relative" role="presentation">
@@ -238,7 +247,7 @@
 
 	{#if isOpen}
 		<div
-			class="z-50 absolute top-20 right-0 w-64 rounded-lg bg-white p-4 shadow-xl dark:bg-gray-800"
+			class="absolute z-50 top-20 right-0 w-64 rounded-lg bg-white bg-opacity-80 p-4 shadow-xl dark:bg-gray-800 dark:bg-opacity-80"
 		>
 			<div class="mb-4 flex items-center justify-between">
 				<h3 class="text-lg font-semibold text-gray-900 dark:text-white">Music Player</h3>

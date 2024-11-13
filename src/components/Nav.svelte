@@ -4,7 +4,7 @@
 	import NavLink from './NavLink.svelte';
 	import BackgroundMusicPlayer from './BackgroundMusicPlayer.svelte';
 
-	let isDark = false;
+	let isDark = true;
 	if (typeof localStorage !== 'undefined') {
 		if (
 			localStorage.theme === 'dark' ||
