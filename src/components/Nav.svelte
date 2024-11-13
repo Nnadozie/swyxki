@@ -3,6 +3,8 @@
 	import { REPO_URL } from '$lib/siteConfig';
 	import NavLink from './NavLink.svelte';
 	import BackgroundMusicPlayer from './BackgroundMusicPlayer.svelte';
+	import { page } from '$app/stores';
+	import ProfileImage from './ProfileImage.svelte';
 
 	let isDark = true;
 	if (typeof localStorage !== 'undefined') {
@@ -24,20 +26,28 @@
 			isDark = true;
 		}
 	}
+
+	$: isHomePage = $page.url.pathname === '/';
 </script>
 
 <nav
 	class="relative mx-auto flex w-full max-w-2xl items-center justify-between border-gray-200
-	 py-8 text-gray-900 dark:border-gray-700
+	 py-8 px-4 sm:px-8 text-gray-900 dark:border-gray-700
 	dark:text-gray-100 sm:pb-16"
 >
-	<a href="#skip" class="skip-nav">Skip to content</a>
-	<MobileMenu />
-	<ul class="ml-[-0.60rem] flex">
-		<li>
-			<NavLink href="/">Home</NavLink>
-		</li>
-		<li>
+	<div class="flex items-center space-x-4">
+		<div class="flex items-center space-x-4">
+			<ProfileImage src="/dozie.jpeg" alt="Dozie from another life" />
+			<a href="#skip" class="skip-nav">Skip to content</a>
+		</div>
+		<!-- <MobileMenu /> -->
+		<ul class=" flex">
+			{#if !isHomePage}
+				<li>
+					<NavLink href="/">Home</NavLink>
+				</li>
+			{/if}
+			<!-- <li>
 			<NavLink href="https://dozie.dev" rel="external">Blog</NavLink>
 		</li>
 		<li>
@@ -50,8 +60,9 @@
 				href={'https://dozie.dev/rss.xml'}
 				><span class="capsize">RSS</span>
 			</a>
-		</li>
-	</ul>
+		</li> -->
+		</ul>
+	</div>
 	<div class="flex items-center space-x-4">
 		<!-- RSS -->
 		<!-- <a
@@ -78,7 +89,7 @@
 			</svg>
 		</a> -->
 		<!-- Github -->
-		<a
+		<!-- <a
 			class="rounded-lg text-gray-700 hover:bg-yellow-200 dark:text-gray-200
 			dark:hover:bg-yellow-800"
 			href={REPO_URL}
@@ -99,7 +110,7 @@
 					clip-rule="evenodd"
 				/>
 			</svg>
-		</a>
+		</a> -->
 		<BackgroundMusicPlayer
 			defaultTrack="lofi-01. Beginnings Are Such Delicate Times.flac"
 			volume={0.5}

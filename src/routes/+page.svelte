@@ -2,6 +2,7 @@
 	import Newsletter from '../components/Newsletter.svelte';
 	import FeatureCard from '../components/FeatureCard.svelte';
 	import LatestPosts from '../components/LatestPosts.svelte';
+	import CTAsComponent from '../components/CTAsComponent.svelte';
 	import {
 		SITE_URL,
 		REPO_URL,
@@ -16,6 +17,20 @@
 	// technically this is a slighlty different type because doesnt have 'content' but we'll let it slide
 	/** @type {import('$lib/types').ContentItem[]} */
 	$: items = data.items;
+
+	const ctas = [
+		{ cta: 'read', noun: 'story', link: '/about', newWindow: false },
+		{ cta: 'explore', noun: 'software engineering', link: '/engineering', newWindow: false },
+		{ cta: 'read', noun: 'technical writing', link: '/writing', newWindow: false },
+		{ cta: 'watch', noun: 'technical videos', link: '/videos', newWindow: false },
+		{ cta: 'explore', noun: 'misc', link: '/misc', newWindow: false },
+		{ cta: 'read', noun: 'everyday thoughts, more thoughts', link: '/thoughts', newWindow: false },
+		{ cta: 'read', noun: 'whimsical personal essays', link: '/essays', newWindow: false },
+		{ cta: 'read', noun: 'poetry', link: '/poetry', newWindow: false },
+		{ cta: 'subscribe to', noun: 'RSS', link: '/rss.xml', newWindow: true },
+		{ cta: 'send', noun: 'a message', link: '/contact', newWindow: false },
+		{ cta: 'schedule', noun: 'a meeting as soon as today', link: '/calendar', newWindow: true }
+	];
 </script>
 
 <svelte:head>
@@ -36,21 +51,25 @@
 </svelte:head>
 
 <div
-	class="flex flex-col items-start justify-center max-w-2xl px-4 pb-16 mx-auto border-gray-200 dark:border-gray-700 sm:px-8"
+	class="flex flex-col items-start justify-center max-w-2xl px-4 pb-16 mx-auto border-gray-200 dark:border-gray-700 sm:px-8 w-full"
 >
 	<div class="flex flex-col-reverse items-start sm:flex-row">
 		<div class="flex flex-col pr-8">
-			<h1 class="mb-3 text-3xl font-bold tracking-tight text-black dark:text-white md:text-5xl">
-				This is
-
+			<h2 class="mb-3 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
 				<span
-					class="relative inline-block ml-2 before:absolute before:-inset-1 before:block before:-skew-y-3 before:bg-red-500"
+					class="relative inline-block before:absolute before:-inset-1 before:block before:-skew-y-3 before:bg-white-400"
 				>
-					<span class="relative text-yellow-400 skew-y-3">{SITE_TITLE}</span>
+					<span class="relative text-white-400 skew-y-3">Dozie</span>
 				</span>
-				!
-			</h1>
-			<h2 class="mb-4 text-gray-700 dark:text-gray-200">
+			</h2>
+			<h2 class="mb-3 text-1xl font-bold tracking-tight text-black dark:text-white md:text-2xl">
+				<span
+					class="relative inline-block before:absolute before:-inset-1 before:block before:-skew-y-3 before:bg-white-400"
+				>
+					<span class="relative text-white-400 skew-y-3">{SITE_TITLE}</span>
+				</span>
+			</h2>
+			<!-- <h2 class="mb-4 text-gray-700 dark:text-gray-200">
 				An opinionated blog starter for <span class="font-semibold"
 					>SvelteKit + Tailwind + Netlify/Vercel.</span
 				>
@@ -59,19 +78,14 @@
 			</h2>
 			<p class="mb-16 text-gray-600 dark:text-gray-400">
 				<a href={REPO_URL}>View source and feature list here!</a>
-			</p>
+			</p> -->
 		</div>
 		<!-- <div
 				class="w-[80px] h-[80px] rounded-full sm:w-[176px] sm:h-[136px] relative mb-8 sm:mb-0 mr-auto bg-cyan-300 bg-opacity-25"
 			/> -->
-		<img
-			class="w-[80px] rounded-full sm:w-[176px] relative mb-8 sm:mb-0 mr-auto bg-cyan-300 bg-opacity-25"
-			src="/dozie.jpeg"
-			alt="Dozie from another life"
-		/>
 	</div>
 
-	<section class="w-full mb-16">
+	<!-- <section class="w-full mb-16">
 		<h3 class="mb-6 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
 			Featured Posts
 		</h3>
@@ -86,7 +100,10 @@
 		</div>
 	</section>
 
-	<LatestPosts {items} />
+	
 
-	<Newsletter />
+	<Newsletter /> -->
+	<!-- <LatestPosts {items} /> -->
+
+	<CTAsComponent {ctas} />
 </div>
