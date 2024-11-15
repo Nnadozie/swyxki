@@ -62,10 +62,10 @@
 				YouTube
 			</a>
 		</div>
-	</div>
-	<p class="prose px-4 dark:prose-invert sm:px-8">
-		This blog is based on the
+	</div> -->
+	<p class="px-4 sm:px-8 text-xs tracking-tight text-gray-300 dark:text-gray-600">
+		This site exists thanks to
 		<a href="https://swyxkit.netlify.app/">swyxkit</a>
-		template.
-	</p> -->
+		and is itself open source. © Nnadozie Okeke {new Date().getFullYear()}.
+	</p>
 </footer>

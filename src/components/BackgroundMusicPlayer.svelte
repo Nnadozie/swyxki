@@ -78,15 +78,9 @@
 		}
 	}
 
-	// Handle first user interaction
+	// Modify handleFirstInteraction to remove automatic playback
 	function handleFirstInteraction() {
-		if (!hasUserInteracted) {
-			hasUserInteracted = true;
-			isPlaying = true;
-			if (isPlaying) {
-				tryPlayAudio();
-			}
-		}
+		// Remove this function's content as we don't want any click to trigger music
 	}
 
 	// Add visibility change handler
@@ -118,7 +112,8 @@
 			audioPlayer.set(audioElement);
 			isInitialized = true;
 
-			document.addEventListener('click', handleFirstInteraction);
+			// Remove the click event listener since we don't want automatic playback
+			// document.addEventListener('click', handleFirstInteraction);
 
 			// Add visibility change listener
 			document.addEventListener('visibilitychange', handleVisibilityChange);
@@ -151,7 +146,8 @@
 				audioContext.close();
 			}
 			document.removeEventListener('visibilitychange', handleVisibilityChange);
-			document.removeEventListener('click', handleFirstInteraction);
+			// Remove the click event listener cleanup since we removed the listener
+			// document.removeEventListener('click', handleFirstInteraction);
 		}
 
 		window.removeEventListener('mousemove', handleDragMove);
@@ -208,9 +204,12 @@
 		}
 	}
 
+	// Update handleBannerContinue to handle the explicit opt-in
 	function handleBannerContinue() {
 		showBanner = false;
-		handleFirstInteraction();
+		hasUserInteracted = true;
+		isPlaying = true;
+		tryPlayAudio();
 	}
 </script>
 
@@ -218,19 +217,23 @@
 
 <div bind:this={playerElement} role="button" tabindex="0">
 	<div class="relative" role="presentation">
-		<!-- Existing player button with added animations -->
 		<button
 			aria-label="Toggle music player"
-			class="music-button group flex h-10 w-10 items-center justify-center rounded-full bg-yellow-400 text-gray-900 shadow-lg transition-all hover:scale-110 hover:bg-yellow-300 active:scale-95 dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-500 {isPlaying
+			class="music-button group relative flex h-10 w-10 items-center justify-center rounded-full bg-transparent text-gray-900 shadow-lg transition-all hover:scale-110 hover:bg-yellow-300 active:scale-95 dark:text-white dark:hover:bg-yellow-500 {isPlaying
 				? 'playing'
 				: ''}"
 			on:click={() => {
 				toggleMenu();
 			}}
 		>
+			<div
+				class="absolute inset-0 rounded-full gentle-pulse group-hover:animate-none bg-yellow-400 dark:bg-yellow-600"
+				style="z-index: 1;"
+			/>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
-				class="h-6 w-6 animate-pulse group-hover:animate-none"
+				class="h-6 w-6 relative"
+				style="z-index: 2;"
 				fill="none"
 				viewBox="0 0 24 24"
 				stroke="currentColor"
@@ -355,14 +358,28 @@
 
 	.music-button {
 		transition: transform 0.3s ease-out;
-		cursor: grab;
+		/* cursor: grab; */
 	}
 
-	.music-button:hover {
+	/* .music-button:hover {
 		cursor: grab;
-	}
+	} */
 
 	.music-button.playing {
 		animation: bobbing 2s ease-in-out infinite;
+	}
+
+	@keyframes gentlePulse {
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.85;
+		}
+	}
+
+	.gentle-pulse {
+		animation: gentlePulse 2s ease-in-out infinite;
 	}
 </style>

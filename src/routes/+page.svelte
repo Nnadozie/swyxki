@@ -3,6 +3,7 @@
 	import FeatureCard from '../components/FeatureCard.svelte';
 	import LatestPosts from '../components/LatestPosts.svelte';
 	import CTAsComponent from '../components/CTAsComponent.svelte';
+	import CopyEmailCTA from '../components/CopyEmailCTA.svelte';
 	import {
 		SITE_URL,
 		REPO_URL,
@@ -19,17 +20,76 @@
 	$: items = data.items;
 
 	const ctas = [
-		{ cta: 'read', noun: 'story', link: '/about', newWindow: false },
-		{ cta: 'explore', noun: 'software engineering', link: '/engineering', newWindow: false },
-		{ cta: 'read', noun: 'technical writing', link: '/writing', newWindow: false },
-		{ cta: 'watch', noun: 'technical videos', link: '/videos', newWindow: false },
-		{ cta: 'explore', noun: 'misc', link: '/misc', newWindow: false },
-		{ cta: 'read', noun: 'everyday thoughts, more thoughts', link: '/thoughts', newWindow: false },
-		{ cta: 'read', noun: 'whimsical personal essays', link: '/essays', newWindow: false },
-		{ cta: 'read', noun: 'poetry', link: '/poetry', newWindow: false },
-		{ cta: 'subscribe to', noun: 'RSS', link: '/rss.xml', newWindow: true },
-		{ cta: 'send', noun: 'a message', link: '/contact', newWindow: false },
-		{ cta: 'schedule', noun: 'a meeting as soon as today', link: '/calendar', newWindow: true }
+		{ cta: 'read my', noun: 'story', link: '/story', newWindow: false, rank: 1 },
+		{
+			cta: 'explore my',
+			noun: 'software craftsmanship',
+			link: 'https://github.com/Nnadozie?tab=overview&from=2023-12-01&to=2023-12-31',
+			newWindow: true,
+			rank: 2.5
+		},
+		{
+			cta: 'send me',
+			noun: 'a message',
+			link: '/contact',
+			newWindow: false,
+			rank: 10,
+			handler: CopyEmailCTA,
+			props: {
+				email: 'dozie@fronte.io'
+			}
+		},
+		{
+			cta: 'learn from my',
+			noun: 'technical writing',
+			link: '/writing',
+			newWindow: false,
+			rank: 4
+		},
+		{
+			cta: 'schedule',
+			noun: 'a meeting for today',
+			link: 'https://calendar.app.google/AvzRhSKyBSA9EYJS6',
+			newWindow: true,
+			rank: 1.3
+		},
+
+		{
+			cta: 'watch my',
+			noun: 'technical videos',
+			link: 'https://www.youtube.com/@doziedev',
+			newWindow: true,
+			rank: 4
+		},
+		{
+			cta: 'view my',
+			noun: 'everyday thoughts',
+			link: 'https://x.com/dozieokk',
+			newWindow: true,
+			rank: 5
+		},
+		{
+			cta: 'peruse my',
+			noun: 'product ideas',
+			link: 'https://trello.com/c/dXJc1Ryq',
+			newWindow: true,
+			rank: 3
+		},
+		{
+			cta: 'read my',
+			noun: 'personal essays',
+			link: 'https://medium.com/@dozieokk',
+			newWindow: true,
+			rank: 7
+		},
+		{ cta: 'enjoy my', noun: 'poetry', link: '/poetry', newWindow: false, rank: 8 },
+		{
+			cta: 'subscribe to my',
+			noun: 'RSS',
+			link: 'https://dozie.dev/rss.xml',
+			newWindow: true,
+			rank: 9
+		}
 	];
 </script>
 

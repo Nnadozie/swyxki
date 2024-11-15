@@ -5,29 +5,14 @@
 	import BackgroundMusicPlayer from './BackgroundMusicPlayer.svelte';
 	import { page } from '$app/stores';
 	import ProfileImage from './ProfileImage.svelte';
-
-	let isDark = true;
-	if (typeof localStorage !== 'undefined') {
-		if (
-			localStorage.theme === 'dark' ||
-			(!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-		) {
-			isDark = true;
-		}
-	}
-	function toggleDarkMode() {
-		if (isDark) {
-			document.documentElement.classList.remove('dark');
-			localStorage.theme = 'light';
-			isDark = false;
-		} else {
-			document.documentElement.classList.add('dark');
-			localStorage.theme = 'dark';
-			isDark = true;
-		}
-	}
+	import { darkMode } from '$lib/darkMode';
 
 	$: isHomePage = $page.url.pathname === '/';
+	$: isDark = $darkMode;
+
+	function toggleDarkMode() {
+		darkMode.toggle();
+	}
 </script>
 
 <nav

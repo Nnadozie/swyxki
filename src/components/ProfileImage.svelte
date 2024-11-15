@@ -5,7 +5,7 @@
 	let imgError = false;
 </script>
 
-{#if !$page.url.pathname.includes('/about')}
+{#if !$page.url.pathname.includes('/story')}
 	<div class="relative flex items-center">
 		{#if !imgError}
 			<img

@@ -4,15 +4,15 @@ import { listContent } from '$lib/content';
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function GET({ fetch }) {
   const posts = await listContent(fetch);
-	const pages = [`about`];
-	const body = sitemap(posts, pages);
+  const pages = [`story`];
+  const body = sitemap(posts, pages);
 
-	return new Response(body, {
-		headers: {
+  return new Response(body, {
+    headers: {
       'Cache-Control': `public, max-age=${86400}`, // 24 hours
-			'Content-Type': 'application/xml'
-		}
-	});
+      'Content-Type': 'application/xml'
+    }
+  });
 }
 
 const sitemap = (posts, pages) => `<?xml version="1.0" encoding="UTF-8" ?>
@@ -30,27 +30,27 @@ const sitemap = (posts, pages) => `<?xml version="1.0" encoding="UTF-8" ?>
       <priority>0.7</priority>
     </url>
     ${pages
-			.map(
-				(page) => `
+    .map(
+      (page) => `
     <url>
       <loc>${SITE_URL}/${page}</loc>
       <changefreq>daily</changefreq>
       <priority>0.7</priority>
     </url>
     `
-			)
-			.join('')}
+    )
+    .join('')}
     ${posts
-			.map((post) =>
-				post.isPrivate
-					? null
-					: `
+    .map((post) =>
+      post.isPrivate
+        ? null
+        : `
     <url>
       <loc>${SITE_URL}/${post.slug}</loc>
       <changefreq>daily</changefreq>
       <priority>0.7</priority>
     </url>
     `
-			)
-			.join('')}
+    )
+    .join('')}
   </urlset>`;
