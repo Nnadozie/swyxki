@@ -1,5 +1,6 @@
 <script>
 	import { darkMode } from '$lib/darkMode';
+	import { goto } from '$app/navigation';
 
 	/** @type {{ cta: string; noun: string; link: string; newWindow: boolean; rank: number; handler?: any }[]} */
 	export let ctas = [];
@@ -26,6 +27,16 @@
 
 		return `${rankStyles} ${baseStyles} ${darkStyles}`;
 	}
+
+	function handleClick(event, cta) {
+		if (cta.newWindow) return; // Let default behavior handle new windows
+
+		if (cta.link.startsWith('/')) {
+			// Only handle internal links
+			event.preventDefault();
+			goto(cta.link, { noscroll: true });
+		}
+	}
 </script>
 
 <section class="mb-8 w-full max-w-3xl mx-auto">
@@ -46,9 +57,9 @@
 						<a
 							class={getLinkStyles(cta.rank, isDark)}
 							href={cta.link}
-							data-sveltekit-preload-data
 							target={cta.newWindow ? '_blank' : '_self'}
 							rel={cta.newWindow ? 'noopener noreferrer' : ''}
+							on:click={(e) => handleClick(e, cta)}
 						>
 							{cta.noun}
 						</a>
