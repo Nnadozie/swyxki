@@ -9,6 +9,17 @@
 	let loading = true;
 	let error = null;
 
+	// Filter paid posts (Memberstack and Sentry)
+	$: paidPosts = items.filter(
+		(post) =>
+			post.category === 'Blog' ||
+			post.link?.includes('memberstack.com') ||
+			post.slug?.includes('codecov')
+	);
+
+	// Filter LinkedIn posts
+	$: linkedInPosts = items.filter((post) => post.link?.includes('linkedin.com'));
+
 	async function fetchRSSPosts() {
 		try {
 			const response = await fetch('/api/latest-posts');
@@ -27,31 +38,62 @@
 </script>
 
 <section class="mb-8 w-full">
-	<h3
-		id="latest"
-		class="mb-6 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl"
-	>
-		Latest Posts
-	</h3>
+	<h3 id="paid-posts" class="mb-4 text-2xl font-bold">Commissioned Articles</h3>
+	<ul class="space-y-2 text-white">
+		{#each paidPosts as post (post.link || post.slug)}
+			<li>
+				<a
+					class="font-bold"
+					href={post.link || post.slug}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					{post.title}
+				</a>
+				{#if post.link?.includes('memberstack.com')}
+					<span class="ml-2 text-xs bg-blue-500 px-2 py-1 rounded">Memberstack (YC S20)</span>
+				{/if}
+				{#if post.slug?.includes('codecov')}
+					<span class="ml-2 text-xs bg-purple-500 px-2 py-1 rounded">Sentry</span>
+				{/if}
+				{#if post.date}
+					<span class="hidden text-xs text-black dark:text-gray-400 sm:inline ml-2">
+						{new Date(post.date).toISOString().slice(0, 10)}
+					</span>
+				{/if}
+			</li>
+		{/each}
+	</ul>
+	<h3 id="linkedin-posts" class="mt-8 mb-4 text-2xl font-bold">LinkedIn Articles</h3>
+	<ul class="space-y-2 text-white">
+		{#each linkedInPosts as post (post.link)}
+			<li>
+				<a class="font-bold" href={post.link} target="_blank" rel="noopener noreferrer">
+					{post.title}
+				</a>
+				{#if post.date}
+					<span class="hidden text-xs text-black dark:text-gray-400 sm:inline ml-2">
+						{new Date(post.date).toISOString().slice(0, 10)}
+					</span>
+				{/if}
+			</li>
+		{/each}
+	</ul>
 
+	<h3 id="hashnode-posts" class="mt-8 mb-4 text-2xl font-bold">Hashnode Articles</h3>
 	{#if loading}
 		<p class="text-gray-600 dark:text-gray-400">Loading posts...</p>
 	{:else if error}
 		<p class="text-red-500">Error: {error}</p>
 	{:else}
 		<ul class="space-y-2 text-white">
-			{#each [...items, ...rssPosts] as post (post.link || post.slug)}
+			{#each rssPosts as post (post.link)}
 				<li>
-					<a
-						class="font-bold"
-						href={post.link || post.slug}
-						target={post.link ? '_blank' : '_self'}
-						rel={post.link ? 'noopener noreferrer' : ''}
-					>
+					<a class="font-bold" href={post.link} target="_blank" rel="noopener noreferrer">
 						{post.title}
 					</a>
 					{#if post.date}
-						<span class="hidden text-xs text-black dark:text-gray-400 sm:inline">
+						<span class="hidden text-xs text-black dark:text-gray-400 sm:inline ml-2">
 							{new Date(post.date).toISOString().slice(0, 10)}
 						</span>
 					{/if}
@@ -59,20 +101,4 @@
 			{/each}
 		</ul>
 	{/if}
-
-	<a
-		class="mt-2 flex h-6 rounded-lg leading-7 text-gray-600 transition-all dark:text-gray-400 dark:hover:text-gray-200"
-		href="/blog"
-	>
-		Search and see all posts
-		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="ml-1 h-6 w-6">
-			<path
-				stroke="currentColor"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				stroke-width="2"
-				d="M17.5 12h-15m11.667-4l3.333 4-3.333-4zm3.333 4l-3.333 4 3.333-4z"
-			/>
-		</svg>
-	</a>
 </section>

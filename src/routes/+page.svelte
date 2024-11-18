@@ -1,9 +1,7 @@
 <script>
-	import Newsletter from '../components/Newsletter.svelte';
-	import FeatureCard from '../components/FeatureCard.svelte';
-	import LatestPosts from '../components/LatestPosts.svelte';
 	import CTAsComponent from '../components/CTAsComponent.svelte';
 	import CopyEmailCTA from '../components/CopyEmailCTA.svelte';
+	import NamePronunciation from '../components/NamePronunciation.svelte';
 	import {
 		SITE_URL,
 		REPO_URL,
@@ -125,7 +123,7 @@
 				<span
 					class="relative inline-block before:absolute before:-inset-1 before:block before:-skew-y-3 before:bg-white-400"
 				>
-					<span class="relative text-white-400 skew-y-3">Dozie</span>
+					<NamePronunciation name="Dozie" />
 				</span>
 			</h2>
 			<h2 class="mb-3 text-1xl font-bold tracking-tight text-black dark:text-white md:text-2xl">
@@ -135,41 +133,8 @@
 					<span class="relative text-white-400 skew-y-3">{SITE_TITLE}</span>
 				</span>
 			</h2>
-			<!-- <h2 class="mb-4 text-gray-700 dark:text-gray-200">
-				An opinionated blog starter for <span class="font-semibold"
-					>SvelteKit + Tailwind + Netlify/Vercel.</span
-				>
-				Updated for
-				<a href="https://github.com/sveltejs/kit/">SvelteKit 1.0</a>!
-			</h2>
-			<p class="mb-16 text-gray-600 dark:text-gray-400">
-				<a href={REPO_URL}>View source and feature list here!</a>
-			</p> -->
 		</div>
-		<!-- <div
-				class="w-[80px] h-[80px] rounded-full sm:w-[176px] sm:h-[136px] relative mb-8 sm:mb-0 mr-auto bg-cyan-300 bg-opacity-25"
-			/> -->
 	</div>
-
-	<!-- <section class="w-full mb-16">
-		<h3 class="mb-6 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
-			Featured Posts
-		</h3>
-		<div class="flex flex-col gap-6 md:flex-row">
-			<FeatureCard title="Welcome to swyxkit 2022!" href="/welcome" stringData="Jan 2022" />
-			<FeatureCard
-				title="Moving to a GitHub CMS"
-				href="/moving-to-a-github-cms"
-				stringData="Jan 2022"
-			/>
-			<FeatureCard title="HTML Ipsum demo" href="/moo" stringData="Jan 2022" />
-		</div>
-	</section>
-
-	
-
-	<Newsletter /> -->
-	<!-- <LatestPosts {items} /> -->
 
 	<CTAsComponent {ctas} />
 </div>

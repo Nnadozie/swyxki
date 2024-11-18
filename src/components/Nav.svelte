@@ -23,7 +23,7 @@
 	<div class="flex items-center space-x-4">
 		<div class="flex items-center space-x-4">
 			<ProfileImage src="/dozie.jpeg" alt="Dozie from another life" />
-			<a href="#skip" class="skip-nav">Skip to content</a>
+			<!-- <a href="#skip" class="skip-nav">Skip to content</a> -->
 		</div>
 		<!-- <MobileMenu /> -->
 		<ul class=" flex">

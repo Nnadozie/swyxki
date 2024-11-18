@@ -13,12 +13,35 @@
 			content: '8 Ways to Optimize Your JavaScript Bundle Size - Article about JavaScript bundle optimization techniques',
 			subtitle: 'Optimize your JavaScript bundles for better performance',
 			ghMetadata: null
-		}
+		},
+		{
+			title: 'How to Use the Webflow API: Step by Step Guide',
+			date: '2022-06-02',
+			link: 'https://www.memberstack.com/blog/webflow-api',
+			description: 'Learn how to use Webflow\'s APIs to manage collection items, and trigger actions when events occur – such as sending promotional emails to paying Memberstack members each time a new product item is added to a Webflow collection.',
+			category: 'Blog'
+		},
+		{
+			title: 'Webflow Pricing: What will Webflow cost you?',
+			date: '2022-06-03',
+			link: 'https://www.memberstack.com/blog/webflow-pricing',
+			description: 'Struggling to figure out how much Webflow will cost you? Not sure why it feels like you\'re paying two times for everything? Can\'t explain how costs work to your new client? You\'re not the only one.',
+			category: 'Blog'
+		},
+		{
+			title: 'Using Custom Code in Webflow',
+			date: '2022-06-24',
+			link: 'https://www.memberstack.com/blog/using-custom-code-in-webflow',
+			description: 'Do you want to know how custom code works within Webflow? Want to know what other people are doing with custom code? This article will: Cover what you need to get started using custom code in WebflowShowcase cloneable projects using custom code to push the limits of what can be done with Webflow',
+			category: 'Blog'
+		},
+		{
+			title: 'Prediction sorcery. Doing multiplication the machine learning way.',
+			date: '2017-04-24',
+			link: 'https://www.linkedin.com/pulse/prediction-sorcery-doing-multiplication-machine-learning-okeke',
+			category: 'LinkedIn'
+		},
 	];
 </script>
-
-# Writing
-
-Here you'll find my latest articles and blog posts.
 
 <LatestPosts {items} /> 

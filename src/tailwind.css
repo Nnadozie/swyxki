@@ -122,7 +122,7 @@ h6 a {
 	text-decoration: none !important;
 	@apply text-orange-700 dark:text-orange-400;
 }
-article.prose h2::before {
+/* article.prose h2::before {
 	content: '## ';
 }
 article.prose h3::before {
@@ -131,6 +131,12 @@ article.prose h3::before {
 article.prose h4::before {
 	content: '#### ';
 }
+
+.no-heading-prefix h2::before,
+.no-heading-prefix h3::before,
+.no-heading-prefix h4::before {
+  content: none;
+} */
 
 /* https://seek-oss.github.io/capsize/ */
 .capsize::before {
