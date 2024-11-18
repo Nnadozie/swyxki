@@ -4,7 +4,14 @@ import { json } from '@sveltejs/kit';
 export async function GET() {
     try {
         const parser = new Parser();
-        const feed = await parser.parseURL('https://dozie.dev/rss.xml'); // Replace with your RSS feed URL
+        const response = await fetch('https://dozie.dev/rss.xml');
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const text = await response.text();
+        const feed = await parser.parseString(text);
 
         const posts = feed.items.map(item => ({
             title: item.title,
@@ -15,11 +22,19 @@ export async function GET() {
 
         return json(posts, {
             headers: {
-                'Cache-Control': 'public, max-age=3600' // Cache for 1 hour
+                'Cache-Control': 'public, max-age=3600'
             }
         });
     } catch (error) {
         console.error('Error fetching RSS feed:', error);
-        return new Response('Error fetching RSS feed', { status: 500 });
+        return new Response(
+            JSON.stringify({ error: error.message }),
+            {
+                status: 500,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
     }
 }
