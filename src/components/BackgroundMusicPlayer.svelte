@@ -136,7 +136,7 @@
 			// document.addEventListener('click', handleFirstInteraction);
 
 			// Add visibility change listener
-			document.addEventListener('visibilitychange', handleVisibilityChange);
+			//document.addEventListener('visibilitychange', handleVisibilityChange);
 			// Initialize visibility state
 			isPageVisible = !document.hidden;
 
@@ -165,7 +165,7 @@
 			if (audioContext) {
 				audioContext.close();
 			}
-			document.removeEventListener('visibilitychange', handleVisibilityChange);
+			//document.removeEventListener('visibilitychange', handleVisibilityChange);
 			// Remove the click event listener cleanup since we removed the listener
 			// document.removeEventListener('click', handleFirstInteraction);
 		}
