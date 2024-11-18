@@ -29,7 +29,7 @@
 		<ul class=" flex">
 			{#if !isHomePage}
 				<li>
-					<NavLink href="/">Home</NavLink>
+					<NavLink href="/">{'« Home'}</NavLink>
 				</li>
 			{/if}
 			<!-- <li>

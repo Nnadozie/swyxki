@@ -82,11 +82,17 @@
 			newWindow: true,
 			rank: 7
 		},
-		{ cta: 'enjoy my', noun: 'poetry', link: '/poetry', newWindow: false, rank: 8 },
 		{
-			cta: 'subscribe to my',
-			noun: 'RSS',
-			link: 'https://dozie.dev/rss.xml',
+			cta: 'enjoy my',
+			noun: 'poetry',
+			link: 'https://github.com/Nnadozie/my-angular-website/blob/master/src/assets/files/collection.pdf',
+			newWindow: true,
+			rank: 8
+		},
+		{
+			cta: 'connect with me on',
+			noun: 'LinkedIn',
+			link: 'https://www.linkedin.com/in/nnadozie-okeke/',
 			newWindow: true,
 			rank: 9
 		}

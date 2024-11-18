@@ -2,7 +2,7 @@
   import Story from '../../../Story.md'
 </script>
 
-<div align="center" style="line-height: 1.2;">
+<div align="center" style="line-height: 1.2; font-size: 12px;">
 
 _Written by_ Nnadozie Okeke
 
