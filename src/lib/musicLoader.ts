@@ -13,6 +13,7 @@ interface MusicDirectory {
 export class MusicLoader {
     private musicDirectory: MusicDirectory = {};
     private supportedFormats = ['mp3', 'wav', 'ogg', 'flac'];
+    private baseUrl = '/music';
 
     async scanMusicDirectory(): Promise<MusicDirectory> {
         try {
@@ -32,7 +33,12 @@ export class MusicLoader {
 
     private async loadTracksFromCategory(category: string): Promise<Track[]> {
         try {
-            const response = await fetch(`/api/music/${category}`);
+            const response = await fetch(`${this.baseUrl}/${category}/index.json`);
+
+            if (!response.ok) {
+                throw new Error(`Failed to load track listing for ${category}`);
+            }
+
             const files = await response.json();
 
             return files
@@ -41,7 +47,7 @@ export class MusicLoader {
                 .map((file: string) => ({
                     id: `${category}-${file}`,
                     title: this.formatTitle(file),
-                    url: `/music/${category}/${file}`,
+                    url: `${this.baseUrl}/${category}/${file}`,
                     category,
                     format: file.split('.').pop() || ''
                 }));

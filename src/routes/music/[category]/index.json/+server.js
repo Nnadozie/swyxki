@@ -1,4 +1,4 @@
-import { error } from '@sveltejs/kit';
+import { json } from '@sveltejs/kit';
 import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
@@ -12,13 +12,12 @@ export async function GET({ params }) {
 
         const files = await readdir(musicDir);
 
-        return new Response(JSON.stringify(files), {
+        return json(files, {
             headers: {
-                'Content-Type': 'application/json',
-                'Cache-Control': 'public, max-age=3600'
+                'Cache-Control': 'public, max-age=3600' // Cache for 1 hour
             }
         });
-    } catch (err) {
-        throw error(404, 'Music category not found');
+    } catch (error) {
+        return new Response('Category not found', { status: 404 });
     }
 } 

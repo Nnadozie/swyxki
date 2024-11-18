@@ -32,18 +32,38 @@
 	// Initialize audio context and nodes
 	async function initializeAudio() {
 		if (!browser) return false;
+
 		try {
+			// Check for audio context support
+			if (!window.AudioContext && !window.webkitAudioContext) {
+				throw new Error('Web Audio API not supported');
+			}
+
 			audioContext = new (window.AudioContext || window.webkitAudioContext)();
 			gainNode = audioContext.createGain();
+
 			gainNode.connect(audioContext.destination);
 
+			// Handle suspended state
 			if (audioContext.state === 'suspended') {
 				await audioContext.resume();
 			}
 
+			// Set up audio element with error handling
 			if (audioElement) {
-				const source = audioContext.createMediaElementSource(audioElement);
-				source.connect(gainNode);
+				try {
+					const source = audioContext.createMediaElementSource(audioElement);
+					source.connect(gainNode);
+
+					// Add error handling for audio element
+					audioElement.onerror = (e) => {
+						console.error('Audio element error:', e);
+						isPlaying = false;
+					};
+				} catch (err) {
+					console.error('Error connecting audio source:', err);
+					return false;
+				}
 			}
 
 			return true;
