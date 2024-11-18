@@ -141,17 +141,17 @@
 			isPageVisible = !document.hidden;
 
 			//Initialize position with actual window height
-			buttonRestPosition = { x: 16, y: window.innerHeight - 80 };
-			position = buttonRestPosition;
+			//buttonRestPosition = { x: 16, y: window.innerHeight - 80 };
+			//position = buttonRestPosition;
 
-			window.addEventListener('mousemove', updateButtonPosition);
+			//window.addEventListener('mousemove', updateButtonPosition);
 		}
 
 		// Add event listeners
 		window.addEventListener('mousemove', handleDragMove);
 		window.addEventListener('mouseup', handleDragEnd);
 		window.addEventListener('resize', handleResize);
-		window.addEventListener('mousemove', updateButtonPosition);
+		//window.addEventListener('mousemove', updateButtonPosition);
 	});
 
 	// Cleanup on destroy
@@ -173,7 +173,7 @@
 		window.removeEventListener('mousemove', handleDragMove);
 		window.removeEventListener('mouseup', handleDragEnd);
 		window.removeEventListener('resize', handleResize);
-		window.removeEventListener('mousemove', updateButtonPosition);
+		//window.removeEventListener('mousemove', updateButtonPosition);
 		cancelAnimationFrame(animationFrameId);
 	});
 
