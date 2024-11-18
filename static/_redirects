@@ -1,3 +1,3 @@
-/api/rss.xml https://dozie.dev/:splat 200
+/api/rss.xml https://dozie.dev/rss.xml 200
 /music/*  /music/:splat  200
 # read docs for more https://docs.netlify.com/routing/redirects/

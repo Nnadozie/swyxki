@@ -31,7 +31,7 @@
     X-Clacks-Overhead = "GNU Terry Pratchett"
 
 [[headers]]
-  for = "/proxy/dozie/*"
+  for = "/api/rss.xml"
   [headers.values]
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Methods = "GET, OPTIONS"
