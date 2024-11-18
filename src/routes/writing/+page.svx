@@ -1,1 +1,24 @@
-le writing...
+<script>
+	import LatestPosts from '../../components/LatestPosts.svelte';
+
+	/** @type {import('$lib/types').ContentItem[]} */
+	let items = [
+		{
+			title: '8 Ways to Optimize Your JavaScript Bundle Size',
+			date: '2024-10-18',
+			slug: 'https://about.codecov.io/blog/8-ways-to-optimize-your-javascript-bundle-size/',
+			description: 'Learn techniques to reduce your JavaScript bundle size and improve web performance.',
+			category: 'Blog',
+			tags: ['javascript', 'performance', 'optimization'],
+			content: '8 Ways to Optimize Your JavaScript Bundle Size - Article about JavaScript bundle optimization techniques',
+			subtitle: 'Optimize your JavaScript bundles for better performance',
+			ghMetadata: null
+		}
+	];
+</script>
+
+# Writing
+
+Here you'll find my latest articles and blog posts.
+
+<LatestPosts {items} /> 
