@@ -63,9 +63,47 @@
 			</a>
 		</div>
 	</div> -->
-	<p class="px-4 sm:px-8 text-xs tracking-tight text-gray-300 dark:text-gray-600">
+	<p class="px-4 sm:px-8 text-xs tracking-tight text-gray-300 dark:text-gray-500">
 		This site exists thanks to
-		<a href="https://swyxkit.netlify.app/">swyxkit</a>
-		and is itself open source. © Nnadozie Okeke {new Date().getFullYear()}.
+		<a
+			class="text-gray-500 transition hover:text-gray-300"
+			href="https://swyxkit.netlify.app/"
+			target="_blank"
+			rel="noopener noreferrer">swyxkit</a
+		>
+		and is itself
+		<a
+			href="https://github.com/Nnadozie/swyxki"
+			class="text-gray-500 transition hover:text-gray-300"
+			target="_blank"
+			rel="noopener noreferrer">open source</a
+		>. © Nnadozie Okeke {new Date().getFullYear()}.
 	</p>
+	<div class="px-4 sm:px-8 text-xs tracking-tight text-gray-300 dark:text-gray-500">
+		It draws inspiration from
+	</div>
+	<div class="px-4 sm:px-8 text-xs tracking-tight text-gray-300 dark:text-gray-500">
+		<a
+			class="text-gray-500 transition hover:text-gray-300"
+			href="https://www.trychroma.com/"
+			target="_blank"
+			rel="noopener noreferrer">Try Chroma's Background</a
+		>
+	</div>
+	<div class="px-4 sm:px-8 text-xs tracking-tight text-gray-300 dark:text-gray-500">
+		<a
+			class="text-gray-500 transition hover:text-gray-300"
+			href="https://rubaiat-hossain.com/about/"
+			target="_blank"
+			rel="noopener noreferrer">Rubaiat Hossain's About Intro</a
+		>
+	</div>
+	<div class="px-4 sm:px-8 text-xs tracking-tight text-gray-300 dark:text-gray-500">
+		<a
+			class="text-gray-500 transition hover:text-gray-300"
+			href="https://kevinyien.com/story.html"
+			target="_blank"
+			rel="noopener noreferrer">Kevin Yien's Story Format</a
+		>
+	</div>
 </footer>

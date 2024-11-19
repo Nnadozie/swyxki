@@ -2,7 +2,7 @@ import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
 
 function createDarkModeStore() {
-    const isDark = writable(true);
+    const isDark = writable(false);
 
     if (browser) {
         // Initialize dark mode based on localStorage or system preference
@@ -15,6 +15,11 @@ function createDarkModeStore() {
         } else {
             isDark.set(false);
             document.documentElement.classList.remove('dark');
+        }
+
+        // Set default theme to light if not set
+        if (!('theme' in localStorage)) {
+            localStorage.theme = 'light';
         }
     }
 

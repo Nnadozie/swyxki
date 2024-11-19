@@ -23,7 +23,10 @@
 		} else {
 			document.documentElement.classList.remove('dark');
 		}
-		localStorage.theme = 'dark';
+		// Set default theme to light
+		if (!('theme' in localStorage)) {
+			localStorage.theme = 'light';
+		}
 	</script>
 	%sveltekit.head%
 </head>
