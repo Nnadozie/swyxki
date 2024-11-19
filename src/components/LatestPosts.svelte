@@ -38,14 +38,14 @@
 </script>
 
 <section class="mb-8 w-full">
-	<h3 id="paid-posts" class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+	<h3 id="paid-posts" class="mb-4 text-1xl font-bold text-gray-900 dark:text-white">
 		Commissioned Articles
 	</h3>
 	<ul class="space-y-2">
 		{#each paidPosts as post (post.link || post.slug)}
 			<li>
 				<a
-					class="font-bold text-yellow-700 dark:text-yellow-400 hover:text-yellow-600 hover:underline dark:hover:text-yellow-300"
+					class="text-[1rem] font-bold text-yellow-700 dark:text-yellow-400 hover:text-yellow-600 hover:underline dark:hover:text-yellow-300"
 					href={post.link || post.slug}
 					target="_blank"
 					rel="noopener noreferrer"
@@ -68,14 +68,14 @@
 			</li>
 		{/each}
 	</ul>
-	<h3 id="linkedin-posts" class="mt-8 mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+	<h3 id="linkedin-posts" class="mt-8 mb-4 text-1xl font-bold text-gray-900 dark:text-white">
 		LinkedIn Articles
 	</h3>
 	<ul class="space-y-2">
 		{#each linkedInPosts as post (post.link)}
 			<li>
 				<a
-					class="font-bold text-yellow-700 dark:text-yellow-400 hover:text-yellow-600 hover:underline dark:hover:text-yellow-300"
+					class="text-[1rem] font-bold text-yellow-700 dark:text-yellow-400 hover:text-yellow-600 hover:underline dark:hover:text-yellow-300"
 					href={post.link}
 					target="_blank"
 					rel="noopener noreferrer"
@@ -91,7 +91,7 @@
 		{/each}
 	</ul>
 
-	<h3 id="hashnode-posts" class="mt-8 mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+	<h3 id="hashnode-posts" class="mt-8 mb-4 text-1xl font-bold text-gray-900 dark:text-white">
 		Hashnode Articles
 	</h3>
 	{#if loading}
@@ -103,7 +103,7 @@
 			{#each rssPosts as post (post.link)}
 				<li>
 					<a
-						class="font-bold text-yellow-700 dark:text-yellow-400 hover:text-yellow-600 hover:underline dark:hover:text-yellow-300"
+						class="text-[1rem] font-bold text-yellow-700 dark:text-yellow-400 hover:text-yellow-600 hover:underline dark:hover:text-yellow-300"
 						href={post.link}
 						target="_blank"
 						rel="noopener noreferrer"
