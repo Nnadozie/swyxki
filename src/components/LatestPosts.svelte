@@ -38,12 +38,14 @@
 </script>
 
 <section class="mb-8 w-full">
-	<h3 id="paid-posts" class="mb-4 text-2xl font-bold">Commissioned Articles</h3>
-	<ul class="space-y-2 text-white">
+	<h3 id="paid-posts" class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+		Commissioned Articles
+	</h3>
+	<ul class="space-y-2">
 		{#each paidPosts as post (post.link || post.slug)}
 			<li>
 				<a
-					class="font-bold"
+					class="font-bold text-yellow-700 dark:text-yellow-400 hover:text-yellow-600 hover:underline dark:hover:text-yellow-300"
 					href={post.link || post.slug}
 					target="_blank"
 					rel="noopener noreferrer"
@@ -51,28 +53,37 @@
 					{post.title}
 				</a>
 				{#if post.link?.includes('memberstack.com')}
-					<span class="ml-2 text-xs bg-blue-500 px-2 py-1 rounded">Memberstack (YC S20)</span>
+					<span class="ml-2 text-xs bg-blue-500 px-2 py-1 rounded text-white"
+						>Memberstack (YC S20)</span
+					>
 				{/if}
 				{#if post.slug?.includes('codecov')}
-					<span class="ml-2 text-xs bg-purple-500 px-2 py-1 rounded">Sentry</span>
+					<span class="ml-2 text-xs bg-purple-500 px-2 py-1 rounded text-white">Sentry</span>
 				{/if}
 				{#if post.date}
-					<span class="hidden text-xs text-black dark:text-gray-400 sm:inline ml-2">
+					<span class="hidden text-xs text-gray-500 dark:text-gray-400 sm:inline ml-2">
 						{new Date(post.date).toISOString().slice(0, 10)}
 					</span>
 				{/if}
 			</li>
 		{/each}
 	</ul>
-	<h3 id="linkedin-posts" class="mt-8 mb-4 text-2xl font-bold">LinkedIn Articles</h3>
-	<ul class="space-y-2 text-white">
+	<h3 id="linkedin-posts" class="mt-8 mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+		LinkedIn Articles
+	</h3>
+	<ul class="space-y-2">
 		{#each linkedInPosts as post (post.link)}
 			<li>
-				<a class="font-bold" href={post.link} target="_blank" rel="noopener noreferrer">
+				<a
+					class="font-bold text-yellow-700 dark:text-yellow-400 hover:text-yellow-600 hover:underline dark:hover:text-yellow-300"
+					href={post.link}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					{post.title}
 				</a>
 				{#if post.date}
-					<span class="hidden text-xs text-black dark:text-gray-400 sm:inline ml-2">
+					<span class="hidden text-xs text-gray-500 dark:text-gray-400 sm:inline ml-2">
 						{new Date(post.date).toISOString().slice(0, 10)}
 					</span>
 				{/if}
@@ -80,20 +91,27 @@
 		{/each}
 	</ul>
 
-	<h3 id="hashnode-posts" class="mt-8 mb-4 text-2xl font-bold">Hashnode Articles</h3>
+	<h3 id="hashnode-posts" class="mt-8 mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+		Hashnode Articles
+	</h3>
 	{#if loading}
 		<p class="text-gray-600 dark:text-gray-400">Loading posts...</p>
 	{:else if error}
 		<p class="text-red-500">Error: {error}</p>
 	{:else}
-		<ul class="space-y-2 text-white">
+		<ul class="space-y-2">
 			{#each rssPosts as post (post.link)}
 				<li>
-					<a class="font-bold" href={post.link} target="_blank" rel="noopener noreferrer">
+					<a
+						class="font-bold text-yellow-700 dark:text-yellow-400 hover:text-yellow-600 hover:underline dark:hover:text-yellow-300"
+						href={post.link}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						{post.title}
 					</a>
 					{#if post.date}
-						<span class="hidden text-xs text-black dark:text-gray-400 sm:inline ml-2">
+						<span class="hidden text-xs text-gray-500 dark:text-gray-400 sm:inline ml-2">
 							{new Date(post.date).toISOString().slice(0, 10)}
 						</span>
 					{/if}
