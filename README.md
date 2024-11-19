@@ -1,4 +1,6 @@
-# SwyxKit
+# Personal Fork of SwyxKit -
+
+New component's i've added aren't documented here but they should be easy enough to figure out from their usage.
 
 A lightly opinionated starter for [SvelteKit](https://kit.svelte.dev/) blogs:
 
