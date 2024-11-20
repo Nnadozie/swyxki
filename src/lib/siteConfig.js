@@ -9,6 +9,7 @@ export const MY_TWITTER_HANDLE = 'dozieokk';
 export const MY_YOUTUBE = 'https://youtube.com/doziedev';
 export const POST_CATEGORIES = ['Essay', 'Note'];
 export const GH_PUBLISHED_TAGS = ['Published'];
+export const REPO_OWNER = 'Nnadozie Okeke';
 
 // dont forget process.env.GH_TOKEN
 // if supplied, raises rate limit from 60 to 5000
