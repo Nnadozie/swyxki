@@ -70,7 +70,10 @@ module.exports = {
 						},
 					}
 				}
-			})
+			}),
+			fontFamily: {
+				heading: ['Space Grotesk', 'sans-serif'],
+			},
 		}
 	},
 	variants: {},
