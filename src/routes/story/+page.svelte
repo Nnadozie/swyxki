@@ -80,11 +80,11 @@
 		},
 		{
 			title: "Brought Access Bank's worldremit POS systems back online",
-			details: ['that was some fuggly enterprise code.']
+			details: ['that was some fuggly enterprise code']
 		},
 		{
 			title: 'Landed remote work at KindHealth',
-			details: ['pure joy - thank you Shehu!']
+			details: ['pure joy - thank you Shehu']
 		},
 		{
 			title: 'Layoffs at KindHealth. Layoffs everywhere.',
@@ -96,7 +96,7 @@
 		},
 		{
 			title: 'Wrote for Memberstack (YC S20) while job hunting',
-			details: ['thank you Molly and Duncan!']
+			details: ['thank you Molly and Duncan']
 		},
 		{
 			title: 'Went to the UK for Guncle duties!',
@@ -104,7 +104,7 @@
 		},
 		{
 			title: 'Landed my second remote role at ShipFare',
-			details: ['thank you Stefan!']
+			details: ['thank you Stefan']
 		},
 		{
 			title: 'Did scaling, CI/CD, frontend, backend, observability, and more at ShipFare',
