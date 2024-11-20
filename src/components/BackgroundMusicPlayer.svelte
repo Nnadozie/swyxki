@@ -212,10 +212,19 @@
 
 	function togglePlay() {
 		isPlaying = !isPlaying;
+		if (isPlaying) {
+			showBanner = false;
+			tryPlayAudio();
+		} else {
+			audioElement.pause();
+		}
 	}
 
 	function toggleMenu() {
 		isOpen = !isOpen;
+		if (isOpen) {
+			showBanner = true;
+		}
 	}
 
 	// Add new handlers

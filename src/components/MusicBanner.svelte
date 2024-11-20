@@ -2,6 +2,10 @@
 	import { fade, fly } from 'svelte/transition';
 	export let onContinue = () => {};
 	export let visible = true;
+
+	function handleBannerClick() {
+		onContinue();
+	}
 </script>
 
 {#if visible}
@@ -12,6 +16,7 @@
 		role="alert"
 		aria-live="polite"
 		style="margin-left: 0px;"
+		on:click={handleBannerClick}
 	>
 		<div
 			class="container mx-auto max-w-4xl flex flex-col sm:flex-row items-center justify-between gap-4"
