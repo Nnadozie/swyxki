@@ -78,13 +78,21 @@
 		if (!audioElement || !hasUserInteracted || !isPageVisible) return;
 
 		try {
-			if (!audioContext) {
+			if (!audioContext || audioContext.state === 'closed') {
 				const initialized = await initializeAudio();
 				if (!initialized) return;
 			}
 
 			if (audioContext.state === 'suspended') {
 				await audioContext.resume();
+			}
+
+			// Ensure the audio element is properly loaded
+			if (audioElement.readyState < 2) {
+				// HAVE_CURRENT_DATA
+				await new Promise((resolve) => {
+					audioElement.addEventListener('canplay', resolve, { once: true });
+				});
 			}
 
 			await audioElement.play();
@@ -217,19 +225,34 @@
 			category === 'all' ? musicLoader.getAllTracks() : musicLoader.getTracksByCategory(category);
 	}
 
-	function playRandomTrack() {
-		const randomTrack = musicLoader.getRandomTrack();
-		if (randomTrack) {
-			changeTrack(randomTrack);
-		}
-	}
+	// function playRandomTrack() {
+	// 	const randomTrack = musicLoader.getRandomTrack();
+	// 	if (randomTrack) {
+	// 		changeTrack(randomTrack);
+	// 	}
+	// }
 
 	// Update handleBannerContinue to handle the explicit opt-in
-	function handleBannerContinue() {
+	async function handleBannerContinue() {
 		showBanner = false;
 		hasUserInteracted = true;
+
+		// Initialize audio context first
+		if (!audioContext) {
+			const initialized = await initializeAudio();
+			if (!initialized) {
+				console.error('Failed to initialize audio context');
+				return;
+			}
+		}
+
+		// Resume audio context if suspended
+		if (audioContext.state === 'suspended') {
+			await audioContext.resume();
+		}
+
 		isPlaying = true;
-		tryPlayAudio();
+		await tryPlayAudio();
 	}
 </script>
 
