@@ -7,12 +7,7 @@
 		},
 		{
 			title: 'Grew up in Ibadan',
-			details: [],
-			link: null
-		},
-		{
-			title: 'Went to ISI',
-			details: ["we say 'Ibadan Kini so!'"],
+			details: ["they say 'Ibadan Kini so!'"],
 			link: null
 		},
 		{
@@ -25,7 +20,7 @@
 			details: []
 		},
 		{
-			title: 'Swam with QMBL SWIM',
+			title: 'Trained with QMBL SWIM team',
 			details: []
 		},
 		{
@@ -59,40 +54,68 @@
 		},
 		{
 			title: 'Learned React, Frontend development, agile and CI/CD from Andela',
+			details: []
+		},
+		{
+			title: 'Taught SFS Group to go agile and remote',
+			details: ['just before the pandemic hit']
+		},
+		{
+			title: 'Got promoted',
 			details: ['worldview changed - company not role, market not product, vertical not technology']
 		},
 		{
-			title: 'Said goodbye to SFS Group. Started Fronte.io',
-			details: ['indie consulting']
+			title: 'Said goodbye to SFS Group. Moved back home. Started Fronte.io',
+			details: ['one goal: go EU/US remote']
 		},
 		{
-			title: 'Went broke. Joined Access Bank',
-			details: ['code at enterprise scale']
-		},
-
-		{
-			title: 'Discovered remote work at KindHealth',
-			details: ['pure joy']
+			title: 'Found accountability in friends',
+			details: [
+				'7 of us, 3 from ISI, 1 from QMUL, a GADS mentee from Kenya, and 2 life-long friends from Lagos. I ran the group. We changed our lives.'
+			]
 		},
 		{
-			title:
-				'Laid off. Broke up with long-time partner. Wrote for Memberstack (YC S20) in the meantime',
-			details: ['those were dark times']
+			title: 'Going broke',
+			details: ['Joined Access Bank remotely']
 		},
 		{
-			title: 'To the UK for Guncle duties!',
+			title: "Brought Access Bank's worldremit POS systems back online",
+			details: ['that was some fuggly enterprise code.']
+		},
+		{
+			title: 'Landed remote work at KindHealth',
+			details: ['pure joy - thank you Shehu!']
+		},
+		{
+			title: 'Layoffs at KindHealth. Layoffs everywhere.',
+			details: ['dark times']
+		},
+		{
+			title: 'Long-time partner called it quits',
+			details: ['that was all kinds of painful']
+		},
+		{
+			title: 'Wrote for Memberstack (YC S20) while job hunting',
+			details: ['thank you Molly and Duncan!']
+		},
+		{
+			title: 'Went to the UK for Guncle duties!',
 			details: ["a child's love made the world make sense"]
 		},
 		{
-			title: 'Started building for ShipFare',
+			title: 'Landed my second remote role at ShipFare',
+			details: ['thank you Stefan!']
+		},
+		{
+			title: 'Did scaling, CI/CD, frontend, backend, observability, and more at ShipFare',
 			details: [
-				'building for a high-velocity company while babysitting a toddler full-time was insane work'
+				'building for a high-velocity company while babysitting a toddler 9-5 was insane work'
 			]
 		},
 		{
 			title: 'A break from Guncle duties - freedom!',
 			details: [
-				'or so I thought. My body broke down - couldn’t walk, with excruciating pain for 3 months'
+				'or so I thought. My body broke down - couldn’t walk, in excruciating pain for 3 months'
 			]
 		},
 		{
@@ -108,20 +131,40 @@
 			details: ['realised I had all the skills to build my own SaaS products']
 		},
 		{
+			title: 'Applied for a Canadian PR',
+			details: ['back home in Ibadan']
+		},
+		{
 			title: 'Said goodbye to ShipFare',
-			details: ['apparently burnout is real']
+			details: ['burnout is all too real']
+		},
+		{
+			title: 'Turned down co-founder opportunities',
+			details: ['too low on energy']
 		},
 		{
 			title: 'Took a personal health sabbatical',
 			details: ['lots of needed rest, rejuvenation and healing']
 		},
 		{
+			title: 'Moved back to Lagos',
+			details: []
+		},
+		{
 			title: 'Set up a global HQ mancave in Lagos',
 			details: ['a whole story in itself']
 		},
 		{
-			title: 'Canadian PR Came out',
-			details: ['The Provice of Alberta gave me a provincial nomination in technology ✌️']
+			title: 'The Canadian PR was approved!',
+			details: [
+				'The Province of Alberta gave me a whole ass provincial nomination in software engineering. Sweet ✌️'
+			]
+		},
+		{
+			title: 'Continued my sabbatical',
+			details: [
+				"hit the gym, hit my first 7km run since I couldn't walk, had some therapy, rebuilt my body and mind"
+			]
 		},
 		{
 			title: 'Moved to Edmonton, Alberta 🍁',
@@ -135,18 +178,20 @@
 		},
 		{
 			title: 'Worldview changed again',
-			details: ['cost to scale a product and marketing is everything']
+			details: [
+				'providing value at the application layer + cost to scale a product and marketing is everything'
+			]
 		},
 		{
-			title: 'Re-focused on building my own SaaS products',
+			title: 'Re-focused on building my own SaaS products and riding the AI horizon',
 			details: ["let's see where 2 years take me"]
 		},
 		{
-			title: "In the meantime, I'll need a job",
-			details: ['open to opportunities']
+			title: "In the meantime, I'll need an SWE job",
+			details: ['ready to bring solid engineering and fresh AI expertise to the right team']
 		},
 		{
-			title: 'Big beautiful sigh. Taking it all in...',
+			title: 'New country, new horizons. Here we go!',
 			details: []
 		}
 	];
