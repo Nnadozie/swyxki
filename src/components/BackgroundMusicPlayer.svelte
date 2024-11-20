@@ -129,9 +129,7 @@
 			await musicLoader.scanMusicDirectory();
 			tracks = musicLoader.getAllTracks();
 
-			currentTrack = defaultTrack
-				? tracks.find((t) => t.id === defaultTrack)
-				: musicLoader.getRandomTrack();
+			currentTrack = tracks[0];
 
 			audioElement = new Audio(currentTrack?.url);
 			audioElement.currentTime = startTime;
@@ -213,8 +211,7 @@
 	function togglePlay() {
 		isPlaying = !isPlaying;
 		if (isPlaying) {
-			showBanner = false;
-			tryPlayAudio();
+			handleBannerContinue();
 		} else {
 			audioElement.pause();
 		}
