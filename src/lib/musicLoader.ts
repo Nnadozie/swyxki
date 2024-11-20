@@ -17,7 +17,7 @@ export class MusicLoader {
 
     async scanMusicDirectory(): Promise<MusicDirectory> {
         try {
-            const categories = ['ambient', 'lofi', 'nature'];
+            const categories = ['soundtrack'];
 
             for (const category of categories) {
                 const tracks = await this.loadTracksFromCategory(category);

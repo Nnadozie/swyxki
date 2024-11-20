@@ -20,7 +20,7 @@
 	let audioElement;
 	let audioContext;
 	let gainNode;
-	let categories = ['ambient', 'lofi', 'nature'];
+	let categories = ['soundtrack'];
 	let selectedCategory = 'all';
 	let isPageVisible = true;
 	let hasUserInteracted = false;
@@ -148,9 +148,9 @@
 		}
 
 		// Add event listeners
-		window.addEventListener('mousemove', handleDragMove);
-		window.addEventListener('mouseup', handleDragEnd);
-		window.addEventListener('resize', handleResize);
+		// window.addEventListener('mousemove', handleDragMove);
+		// window.addEventListener('mouseup', handleDragEnd);
+		// window.addEventListener('resize', handleResize);
 		//window.addEventListener('mousemove', updateButtonPosition);
 	});
 
@@ -170,9 +170,9 @@
 			// document.removeEventListener('click', handleFirstInteraction);
 		}
 
-		window.removeEventListener('mousemove', handleDragMove);
-		window.removeEventListener('mouseup', handleDragEnd);
-		window.removeEventListener('resize', handleResize);
+		// window.removeEventListener('mousemove', handleDragMove);
+		// window.removeEventListener('mouseup', handleDragEnd);
+		// window.removeEventListener('resize', handleResize);
 		//window.removeEventListener('mousemove', updateButtonPosition);
 		cancelAnimationFrame(animationFrameId);
 	});
@@ -310,14 +310,14 @@
 				{/each}
 			</div>
 
-			<div class="flex justify-between">
+			<!-- <div class="flex justify-between">
 				<button
 					class="rounded-md bg-yellow-400 px-3 py-1 text-sm text-gray-900 hover:bg-yellow-300 dark:bg-yellow-600 dark:text-white dark:hover:bg-yellow-500"
 					on:click={playRandomTrack}
 				>
 					Random Track
 				</button>
-			</div>
+			</div> -->
 
 			<div class="mt-1 mb-4 flex items-center justify-between">
 				<button

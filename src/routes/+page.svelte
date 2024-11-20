@@ -130,7 +130,7 @@
 				<span
 					class="relative inline-block before:absolute before:-inset-1 before:block before:-skew-y-3 before:bg-white-400"
 				>
-					<span class="relative text-white-400 skew-y-3">{SITE_TITLE}</span>
+					<span class="relative text-white-400 skew-y-3">Software and AI Engineer</span>
 				</span>
 			</h2>
 		</div>

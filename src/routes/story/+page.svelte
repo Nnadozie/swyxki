@@ -18,42 +18,32 @@
 		{
 			title: 'Went to QMUL',
 			details: [],
-			link: 'https://www.qmul.ac.uk/'
+			link: 'https://www.london.ac.uk/federation/queen-mary-university-london'
 		},
 		{
 			title: 'Built up QMUL AI & Robotics Society',
-			details: [],
-			link: 'https://www.qmul.ac.uk/'
+			details: []
 		},
 		{
 			title: 'Swam with QMBL SWIM',
-			details: [],
-			link: 'https://www.qmul.ac.uk/'
-		},
-		{
-			title: 'Tutored for Microprocessor Systems Design',
-			details: [],
-			link: 'https://www.qmul.ac.uk/'
+			details: []
 		},
 		{
 			title: 'Studied Electrical and Electronics Engineering (Hons)',
-			details: ['year in industry changed everything'],
+			details: [],
 			link: null
 		},
 		{
+			title: 'Learned Java, C, Data structures, CPUs, TCP/IP, the works',
+			details: ['year in industry changed everything']
+		},
+		{
 			title: 'Discovered Software Engineering at IBM Hursley',
-			details: [],
-			link: 'https://www.ibm.com/uk-en'
+			details: []
 		},
 		{
 			title: 'Patented cool stuff',
-			details: [],
-			link: 'https://www.ibm.com/uk-en'
-		},
-		{
-			title: 'Took a CS Optimization Methods Module at KCL',
-			details: ['thank you, UK'],
-			link: 'https://www.qmul.ac.uk/'
+			details: ['thank you, UK']
 		},
 		{
 			title: 'Moved to Lagos',
@@ -61,40 +51,102 @@
 		},
 		{
 			title: 'Built things at Compex Africa',
-			details: ['interim CTO taught me startup leadership']
+			details: []
 		},
 		{
-			title: 'Started at SFS Group',
-			details: ['learned Frontend development, React, agile and CI/CD from Andela']
+			title: 'Compex Africa got acquired by SFS Group',
+			details: ['being interim CTO for Compex Africa taught me startup team leadership']
 		},
 		{
-			title: 'Started Fronte.io',
+			title: 'Learned React, Frontend development, agile and CI/CD from Andela',
+			details: ['worldview changed - company not role, market not product, vertical not technology']
+		},
+		{
+			title: 'Said goodbye to SFS Group. Started Fronte.io',
 			details: ['indie consulting']
 		},
 		{
-			title: 'Joined Access Bank',
+			title: 'Went broke. Joined Access Bank',
 			details: ['code at enterprise scale']
 		},
 
 		{
 			title: 'Discovered remote work at KindHealth',
-			details: ['everything changed']
+			details: ['pure joy']
 		},
 		{
-			title: 'Wrote for Memberstack (YC S20)',
-			details: []
+			title:
+				'Laid off. Broke up with long-time partner. Wrote for Memberstack (YC S20) in the meantime',
+			details: ['those were dark times']
 		},
 		{
-			title: 'Built ShipFare',
-			details: []
+			title: 'To the UK for Guncle duties!',
+			details: ["a child's love made the world make sense"]
 		},
 		{
-			title: 'Moved to Edmonton 🍁',
-			details: []
+			title: 'Started building for ShipFare',
+			details: [
+				'building for a high-velocity company while babysitting a toddler full-time was insane work'
+			]
 		},
-
 		{
-			title: 'Taking it all in...',
+			title: 'A break from Guncle duties - freedom!',
+			details: [
+				'or so I thought. My body broke down - couldn’t walk, with excruciating pain for 3 months'
+			]
+		},
+		{
+			title: 'Continued building for ShipFare',
+			details: ['not sure I let on how much pain and stress I was under']
+		},
+		{
+			title: 'Back to the UK for more Guncle duties!',
+			details: ["a child's love made the world make sense again"]
+		},
+		{
+			title: 'Continued building end-to-end features for ShipFare',
+			details: ['realised I had all the skills to build my own SaaS products']
+		},
+		{
+			title: 'Said goodbye to ShipFare',
+			details: ['apparently burnout is real']
+		},
+		{
+			title: 'Took a personal health sabbatical',
+			details: ['lots of needed rest, rejuvenation and healing']
+		},
+		{
+			title: 'Set up a global HQ mancave in Lagos',
+			details: ['a whole story in itself']
+		},
+		{
+			title: 'Canadian PR Came out',
+			details: ['The Provice of Alberta gave me a provincial nomination in technology ✌️']
+		},
+		{
+			title: 'Moved to Edmonton, Alberta 🍁',
+			details: ['hello YEG! hello extended family!']
+		},
+		{
+			title: 'Upskilled as an AI Engineer',
+			details: [
+				'LangChain, LLMs, Llama, Llamaindex, RAG Stack, Vector Databases, Prompt Engineering, the works'
+			]
+		},
+		{
+			title: 'Worldview changed again',
+			details: ['cost to scale a product and marketing is everything']
+		},
+		{
+			title: 'Re-focused on building my own SaaS products',
+			details: ["let's see where 2 years take me"]
+		},
+		{
+			title: "In the meantime, I'll need a job",
+			details: ['open to opportunities']
+		},
+		{
+			title: 'Big beautiful sigh. Taking it all in...',
 			details: []
 		}
 	];
