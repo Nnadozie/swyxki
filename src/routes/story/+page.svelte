@@ -29,6 +29,11 @@
 			link: null
 		},
 		{
+			title: 'Learned Mandarin to HSK2 at QMUL Confucius Institue',
+			details: [],
+			link: null
+		},
+		{
 			title: 'Learned Java, C, Data structures, CPUs, TCP/IP, the works',
 			details: ['year in industry changed everything']
 		},
