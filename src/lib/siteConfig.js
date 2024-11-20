@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://dozie.dev';
+export const SITE_URL = 'https://nnadozie.com';
 export const APPROVED_POSTERS_GH_USERNAME = ['Nnadozie'];
 export const GH_USER_REPO = 'Nnadozie/swyxkit';
 export const REPO_URL = 'https://github.com/' + GH_USER_REPO;
