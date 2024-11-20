@@ -115,7 +115,7 @@
 		{
 			title: 'A break from Guncle duties - freedom!',
 			details: [
-				'or so I thought. My body broke down - couldn’t walk, in excruciating pain for 3 months'
+				'or so I thought. My body broke down - couldn’t walk, laid still in excruciating pain for 3 months'
 			]
 		},
 		{
@@ -161,7 +161,7 @@
 			]
 		},
 		{
-			title: 'Continued my sabbatical',
+			title: 'Continued my health sabbatical',
 			details: [
 				"hit the gym, hit my first 7km run since I couldn't walk, had some therapy, rebuilt my body and mind"
 			]
