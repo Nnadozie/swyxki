@@ -43,7 +43,7 @@
 		},
 		{
 			title: 'Patented cool stuff',
-			details: ['thank you, UK']
+			details: ['thank you, UK'],
 			link: 'https://patents.google.com/?inventor=Nnadozie+E.+Okeke&sort=new'
 		},
 		{
