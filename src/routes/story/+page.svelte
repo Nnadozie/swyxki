@@ -125,7 +125,7 @@
 			]
 		},
 		{
-			title: 'Continued building for ShipFare',
+			title: 'Continued building for ShipFare through the pain',
 			details: ['not sure I let on how much pain and stress I was under']
 		},
 		{
