@@ -44,6 +44,7 @@
 		{
 			title: 'Patented cool stuff',
 			details: ['thank you, UK']
+			link: 'https://patents.google.com/?inventor=Nnadozie+E.+Okeke&sort=new'
 		},
 		{
 			title: 'Moved to Lagos',
