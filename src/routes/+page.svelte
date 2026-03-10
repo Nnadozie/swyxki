@@ -24,6 +24,20 @@
 			noun: 'software craftsmanship',
 			link: 'https://github.com/Nnadozie?tab=overview&from=2023-12-01&to=2023-12-31',
 			newWindow: true,
+			rank: 6
+		},
+		{
+			cta: 'Study with me. Use my',
+			noun: 'study tool',
+			link: '/study',
+			newWindow: false,
+			rank: 2.5
+		},
+		{
+			cta: 'Purchase and share',
+			noun: 'art for peace and good Karma',
+			link: 'https://linktr.ee/dForSoulArt',
+			newWindow: true,
 			rank: 2.5
 		},
 		{
