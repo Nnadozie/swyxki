@@ -14,16 +14,29 @@
 	/>
 </svelte:head>
 
-<div>
-	<SandstormBackground />
-	<!-- Your other content -->
+<div class="relative min-h-screen">
+	<!-- Background image for large screens (right side) and mobile (top) -->
+	<div 
+		class="absolute inset-0 z-0 bg-center bg-no-repeat bg-cover"
+		style="background-image: url('/4K_Cultivate_A_PURE_heart.webp'); background-size: auto 100%; opacity: 0.4; transform: rotate(-15deg);"
+	></div>
+	
+	<!-- Sandstorm background overlay -->
+	<div class="absolute inset-0 z-10">
+		<SandstormBackground />
+	</div>
+	
+	<!-- Content wrapper -->
+	<div class="relative z-20">
+		<!-- Your other content -->
+		<div class="flex flex-col justify-center sm:px-8">
+			<Nav />
+		</div>
+		<main class="flex flex-col justify-center sm:px-8">
+			<slot />
+		</main>
+	</div>
 </div>
-<div class="flex flex-col justify-center sm:px-8">
-	<Nav />
-</div>
-<main class="flex flex-col justify-center sm:px-8">
-	<slot />
-</main>
 
 <footer class="mx-auto flex w-full max-w-2xl flex-col items-start justify-center">
 	<!-- <hr class="border-1 mb-8 w-full border-gray-200 dark:border-gray-800" />
