@@ -22,10 +22,16 @@
 	function getLinkStyles(rank, isDark) {
 		const baseStyles =
 			'text-yellow-700 dark:text-yellow-400 hover:text-yellow-600 hover:underline dark:hover:text-yellow-300 transition-colors duration-200';
+		
+		// Subtle text shadow for improved contrast
+		const shadowStyles = isDark 
+			? 'drop-shadow-[0_0_3px_rgba(255,255,255,0.3)]' 
+			: 'drop-shadow-[0_0_2px_rgba(0,0,0,0.4)]';
+		
 		const rankStyles = getRankStyles(rank);
 		const darkStyles = rank > 1 && isDark ? '!text-white' : '';
 
-		return `${rankStyles} ${baseStyles} ${darkStyles}`;
+		return `${rankStyles} ${baseStyles} ${shadowStyles} ${darkStyles}`;
 	}
 
 	function handleClick(event, cta) {

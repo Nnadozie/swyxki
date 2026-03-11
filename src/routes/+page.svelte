@@ -34,7 +34,7 @@
 			rank: 2.5
 		},
 		{
-			cta: 'Purchase and share',
+			cta: 'Support',
 			noun: 'art for peace and good Karma',
 			link: 'https://linktr.ee/dForSoulArt',
 			newWindow: false,
