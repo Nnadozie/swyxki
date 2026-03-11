@@ -14,7 +14,7 @@
 	/>
 </svelte:head>
 
-<div class="relative min-h-screen">
+<div class="relative min-h-screen overflow-hidden">
 	<!-- Background image for large screens (right side) and mobile (top) -->
 	<div 
 		class="absolute inset-0 z-0 bg-center bg-no-repeat bg-cover"
