@@ -118,6 +118,51 @@ See https://swyxkit.netlify.app/ (see [Deploy Logs](https://app.netlify.com/site
 
 Overall, this is a partial implementation of https://www.swyx.io/the-surprisingly-high-table-stakes-of-modern-blogs/
 
+## Deployment
+
+### Netlify (Recommended)
+
+1. **Automatic Deployment:**
+   - Click the [Deploy to Netlify](https://app.netlify.com/start/deploy?repository=https://github.com/sw-yx/swyxkit) button
+   - Connect your GitHub repository
+   - Deploy with default settings
+
+2. **Manual Deployment:**
+```bash
+# Build the project
+yarn run build
+
+# Deploy using Netlify CLI
+ntl init
+ntl deploy --prod
+```
+
+### Environment Variables Required
+
+Set these in your Netlify dashboard (Site settings → Deploys → Environment):
+
+- `GH_TOKEN` - GitHub personal access token (required for API rate limits)
+- `NODE_VERSION` - Set to `24` (matches local development)
+
+### Build Configuration
+
+The project uses `netlify.toml` for build settings:
+- Node.js version: 24
+- Build command: `npm run build`
+- Publish directory: `build`
+- Force npm install with `-f` flag for Histoire compatibility
+
+### Alternative Platforms
+
+- **Vercel:** Supported via `@sveltejs/adapter-auto` (not regularly tested)
+- **Cloudflare:** Supported via `@sveltejs/adapter-auto` (not regularly tested)
+
+### Troubleshooting
+
+- If build fails due to dependency conflicts, try `npm install --legacy-peer-deps`
+- Ensure Node.js version matches between local and deployment environments
+- Check that `GH_TOKEN` is set if GitHub API features aren't working
+
 ## Setup
 
 ### Step 0: Clone project (and deploy)
@@ -211,6 +256,25 @@ lorem ipsum
 If your `Published` post (any post with one of the labels set in `GH_PUBLISHED_TAGS`) doesn't show up, you may have forgotten to set `APPROVED_POSTERS_GH_USERNAME` to your GitHub username in `siteConfig`.
 
 If all of this is annoying feel free to rip out the GitHub Issues CMS wiring and do your own content pipeline, I'm not your boss. MDSveX is already set up in this repo if you prefer not having a disconnected content toolchain from your codebase (which is fine, I just like having it in a different place for a better editing experience). See also my blogpost on [the benefits of using GitHub Issues as CMS](https://swyxkit.netlify.app/moving-to-a-github-cms).
+
+## Changelog
+
+### 2026
+
+**March 14, 2026**
+- `e399af3` - Update Node.js version to 24 in `netlify.toml` for deployment compatibility
+- `076dac5` - Update personal story with AMA contract experience and Year 2 Canada journey
+- `74b4096` - Improve accessibility across the site
+- `434ef02` - Add overflow hidden styling fixes
+- `04c34a1` - Add art piece to background design
+- `0ec509b` - Add study tool page
+
+**Key Changes in 2026:**
+- Enhanced personal story timeline with professional experience
+- Improved accessibility compliance
+- Visual design enhancements with background art
+- Added study resources section
+- Updated deployment configuration for Node.js 24
 
 ## Optimizations to try after you are done deploying
 
