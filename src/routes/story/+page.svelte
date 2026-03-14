@@ -193,12 +193,29 @@
 			details: ["let's see where 2 years take me"]
 		},
 		{
-			title: "In the meantime, I'll need an SWE job",
+			title: "Interviewed at Shopify and AMA for an SWE role",
 			details: ['ready to bring solid engineering and fresh AI expertise to the right team']
 		},
 		{
 			title: 'New country, new horizons. Here we go!',
 			details: []
+		},{
+			title: 'Year One: excellent contract year at AMA in the global payments fintech team',
+			details: [
+				'My first senior software engineer role.',
+				'amazing experience under management of Chris and Jason',
+				'fantastic teammates: Wendy, Mark, Jay, Patrick, & Ben',
+				'great collaboration with PMs Jennifer and Henrietta',
+				'we tracked every penny.',
+				'it was excellent and an amazing AWS Serverless experience!'
+			]
+		},
+		{
+			title: "Year 2: focus now is agentic engineering and scaling my non 9-5 income",
+			details: [
+				'🤞🏾 we never need jobs for income again',
+				' ready to work on interesting ideas with highly motivated creators!'
+			]
 		}
 	];
 </script>
