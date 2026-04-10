@@ -1,27 +1,52 @@
-import Parser from 'rss-parser';
 import { json } from '@sveltejs/kit';
+
+const HASHNODE_GQL_ENDPOINT = 'https://gql.hashnode.com';
+
+const GET_POSTS_QUERY = `
+  query Publication($host: String!, $first: Int!) {
+    publication(host: $host) {
+      posts(first: $first) {
+        edges {
+          node {
+            id
+            title
+            brief
+            url
+            publishedAt
+            content {
+              html
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 export async function GET({ fetch }) {
     try {
-        const parser = new Parser();
-        const rssUrl = import.meta.env.DEV
-            ? 'https://dozie.dev/rss.xml'  // In dev, use local endpoint
-            : '/api/rss.xml';  // In prod, use redirected endpoint
+        const response = await fetch(HASHNODE_GQL_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                query: GET_POSTS_QUERY,
+                variables: { host: 'dozie.dev', first: 10 }
+            })
+        });
 
-        const response = await fetch(rssUrl);
+        const result = await response.json();
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        if (result.errors) {
+            throw new Error(result.errors[0].message);
         }
 
-        const text = await response.text();
-        const feed = await parser.parseString(text);
-
-        const posts = feed.items.map(item => ({
-            title: item.title,
-            link: item.link,
-            date: item.pubDate || item.isoDate,
-            content: item.content
+        const posts = result.data.publication.posts.edges.map(edge => ({
+            title: edge.node.title,
+            link: edge.node.url,
+            date: edge.node.publishedAt,
+            content: edge.node.content?.html || edge.node.brief
         }));
 
         return json(posts, {
@@ -30,7 +55,7 @@ export async function GET({ fetch }) {
             }
         });
     } catch (error) {
-        console.error('Error fetching RSS feed:', error);
+        console.error('Error fetching posts:', error);
         return new Response(
             JSON.stringify({ error: error.message }),
             {
